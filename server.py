@@ -91,13 +91,18 @@ def displayDiagnostics(gameData):
     printGameBoard(gameData[4:])
 
 
+# to take a type 2 protocol and update the game state
+def updateGameData(client_data):
+    print("DEBUG")
+
+
 # Listen for connections
 def main():
     # make a TCP server
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         server.bind((IP, PORT))
-        # we dont need a large backlog (5)
+        # we don't need a large backlog (5)
         server.listen(5)
         print(f'[*] Listening on {IP}:{PORT}')
 
@@ -121,42 +126,74 @@ def handle_client(client_socket, address, port):
     with client_socket as sock:
         try:
             print(f'[*] Accepted connection from {address}:{port}')
+            gameData = [0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+            displayDiagnostics(gameData)
 
             while True:
 
                 # get the game data from client
                 received_data = sock.recv(1024)
-                gameDataStr = received_data.decode()
-                gameData = list(map(int, gameDataStr.split(',')))
+                gameData[2] += 1
+                response_raw = received_data.decode()
+                client_request = list(map(int, response_raw.split(',')))
 
-                # type default
-                if gameData[0] == 0:
+                # client move request type
+                if client_request[0] == 2:
 
-                    if gameData[1] == 13:
+                    # check to see if the requested spot is available
+                    requested_spot = 3 + client_request[2]
+                    if gameData[requested_spot] == 0:
 
+                        # commit client's turn
+                        gameData[3] = 1
+                        gameData[requested_spot] = 1
                         displayDiagnostics(gameData)
 
                         # take a turn
                         if not isGameOver(gameData):
+                            # X's turn attempted
+                            gameData[3] = 2
                             computerTurn(gameData)
+                        displayDiagnostics(gameData)
 
+                        # game over?
                         if isGameOver(gameData):
+
+                            # convert data to a format that can be sent through a socket
+                            gameDataStr = ','.join(map(str, gameData))
+
+                            # send the data
+                            sock.send(gameDataStr.encode())
+                            gameData[2] += 1
+
                             # reset the game information but keep send-count
                             print(f"[*] Game data before reset: {gameData}")
                             gameData[4:] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
                             print(f"[*] Game data after reset:  {gameData}")
 
+                        else:
+
+                            # convert data to a format that can be sent through a socket
+                            gameDataStr = ','.join(map(str, gameData))
+
+                            # send the data
+                            sock.send(gameDataStr.encode())
+                            gameData[2] += 1
+
+                    else:
+
                         # convert data to a format that can be sent through a socket
-                        gameData[2] += 1
+                        gameData[3] = 1
                         gameDataStr = ','.join(map(str, gameData))
 
                         # send the data
                         sock.send(gameDataStr.encode())
+                        gameData[2] += 1
 
-                        displayDiagnostics(gameData)
+                        print("[*] Client requested an occupied space.")
 
-                # type terminate game
-                elif gameData[0] == 1:
+                # type terminate game type
+                elif client_request[0] == 1:
                     print(f"[*] Disconnected from {address}:{port}")
                     break
 
