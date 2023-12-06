@@ -7,11 +7,12 @@
 import socket
 import threading
 import random
+import time
 
 # What IP I am listening to:
 IP = '0.0.0.0'
-# What Port I am listening on:
-PORT = 10101
+# What current_port I am listening on:
+current_port = 10101
 
 
 def isGameOver(gameData):
@@ -48,7 +49,7 @@ def convertSpotValue(spot):
     if spot == 2:
         return "X"
     else:
-        return "ERROR"
+        return "convertSpotValue ERROR"
 
 
 def printGameBoard(spots):
@@ -71,29 +72,30 @@ def computerTurn(gameData):
         print("It's a draw!")
 
 
-def displayDiagnostics(gameData):
+def displayDiagnostics(gameData, current_port):
     # print the game data
+    print(f"[*] Players: {players}")
     if gameData[3] == 1:
-        print("O's turn:")
+        print(f"[*] O's turn: {current_port}")
     elif gameData[3] == 2:
-        print("X's turn:")
+        print(f"[*] X's turn: {current_port}")
     elif gameData[3] == 3:
-        print("Cat's game...")
+        print("[*] Cat's game...")
     elif gameData[3] == 4:
-        print("O wins!")
+        print("[*] O wins!")
     elif gameData[3] == 5:
-        print("X wins!")
+        print("[*] X wins!")
     elif gameData[3] == 0:
         print(f"[*] Game start!")
     else:
-        print("ERROR")
+        print("[*] displayDiagnostics ERROR")
     print(f"[*] Send count: {gameData[2]}")
     printGameBoard(gameData[4:])
 
 
-# to take a type 2 protocol and update the game state
-def updateGameData(client_data):
-    print("DEBUG")
+# global game data for both clients
+gameData = [0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+players = [1, 0, 0]  # [current player], [player 1's current_port], [player 2's current_port]
 
 
 # Listen for connections
@@ -101,10 +103,10 @@ def main():
     # make a TCP server
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
-        server.bind((IP, PORT))
+        server.bind((IP, current_port))
         # we don't need a large backlog (5)
         server.listen(5)
-        print(f'[*] Listening on {IP}:{PORT}')
+        print(f'[*] Listening on {IP}:{current_port}')
 
         # Continuously listen for clients from any address (0.0.0.0)
         while True:
@@ -116,92 +118,180 @@ def main():
             client_handler = threading.Thread(target=handle_client, args=(client, address[0], address[1]))
             client_handler.start()
     except OSError as os:
-        print("OSError: Address already in use.")
+        print("[*] OSError: Address already in use.")
     except KeyboardInterrupt as ki:
         print("\n[*] Exiting...")
     
 
 # Send data back to the connecting client:
-def handle_client(client_socket, address, port):
+def handle_client(client_socket, address, current_port):
     with client_socket as sock:
         try:
-            print(f'[*] Accepted connection from {address}:{port}')
-            gameData = [0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-            displayDiagnostics(gameData)
+            print(f'[*] Accepted connection from {address}:{current_port}')
+
+            # use this to manage when to update the GUI on the server's side
+            game_has_changed = True
+
+            # store the current_port of each player
+            if players[1] == 0:
+                players[1] = current_port
+                # convert data to a format that can be sent through a socket
+                client_setup = ','.join(map(str, [3, 3, 1]))
+                # send the data
+                sock.send(client_setup.encode())
+                gameData[2] += 1
+            elif players[2] == 0 and players[1] != current_port:
+                players[2] = current_port
+                # convert data to a format that can be sent through a socket
+                client_setup = ','.join(map(str, [3, 3, 2]))
+                # send the data
+                sock.send(client_setup.encode())
+                gameData[2] += 1
+            else:
+                print("[*] Spaces full. No more players may join.")
+                # convert data to a format that can be sent through a socket
+                client_setup = ','.join(map(str, [3, 3, 0]))
+                # send the data
+                sock.send(client_setup.encode())
+                gameData[2] += 1
 
             while True:
 
-                # get the game data from client
-                received_data = sock.recv(1024)
+                time.sleep(1)
+
+                if game_has_changed:
+                    displayDiagnostics(gameData, current_port)
+
+                # if game is over
+                if gameData[3] > 2:
+
+                    # convert data to a format that can be sent through a socket
+                    gameDataStr = ','.join(map(str, gameData))
+                    # send the data
+                    sock.send(gameDataStr.encode())
+                    gameData[2] += 1
+
+                    # reset the game information but keep send-count
+                    print(f"[*] Game data before reset: {gameData}")
+                    print(f"[*] Players: {players}")
+                    gameData[4:] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+                    print(f"[*] Game data after reset:  {gameData}")
+                    gameData[3] = 1
+                    players[0] = 1
+                    players[1] = 0
+                    players[2] = 0
+                    break
+
+                if gameData[3] == 0:
+                    gameData[3] = 1
+
+                # convert data to a format that can be sent through a socket
+                gameDataStr = ','.join(map(str, gameData))
+                # send the data
+                sock.send(gameDataStr.encode())
                 gameData[2] += 1
-                response_raw = received_data.decode()
-                client_request = list(map(int, response_raw.split(',')))
 
-                # client move request type
-                if client_request[0] == 2:
+                # if the correct player has the current port
+                if players[players[0]] == current_port:
 
-                    # check to see if the requested spot is available
-                    requested_spot = 3 + client_request[2]
-                    if gameData[requested_spot] == 0:
+                    # get the game data from client
+                    received_data = sock.recv(1024)
+                    gameData[2] += 1
+                    response_raw = received_data.decode()
+                    client_request = list(map(int, response_raw.split(',')))
 
-                        # commit client's turn
-                        gameData[3] = 1
-                        gameData[requested_spot] = 1
-                        displayDiagnostics(gameData)
+                    # client move request type
+                    if client_request[0] == 2:
 
-                        # take a turn
-                        if not isGameOver(gameData):
-                            # X's turn attempted
-                            gameData[3] = 2
-                            computerTurn(gameData)
-                        displayDiagnostics(gameData)
+                        # if the expected player's current_port is the current current_port, continue
+                        if players[players[0]] == current_port:
 
-                        # game over?
-                        if isGameOver(gameData):
+                            # check to see if the requested spot is available
+                            requested_spot = 3 + client_request[2]
+                            if gameData[requested_spot] == 0:
 
-                            # convert data to a format that can be sent through a socket
-                            gameDataStr = ','.join(map(str, gameData))
+                                # X's Turn
+                                if players[0] == 1:
+                                    other_player_turn = 2
 
-                            # send the data
-                            sock.send(gameDataStr.encode())
-                            gameData[2] += 1
+                                # O's Turn
+                                elif players[0] == 2:
+                                    other_player_turn = 1
 
-                            # reset the game information but keep send-count
-                            print(f"[*] Game data before reset: {gameData}")
-                            gameData[4:] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-                            print(f"[*] Game data after reset:  {gameData}")
+                                else:
+                                    print("[*] CURRENT PLAYER CHECK ERROR")
 
+                                # commit client's turn
+                                gameData[requested_spot] = players[0]  # the piece for the player: X/O
+                                game_has_changed = True
+
+                                # computer turn
+                                '''
+                                if not isGameOver(gameData):
+                                    # X's turn attempted
+                                    gameData[3] = 2
+                                    computerTurn(gameData)
+                                displayDiagnostics(gameData, current_port)
+                                '''
+
+                                # game over? (this check can also change the value of the game state)
+                                if isGameOver(gameData):
+
+                                    displayDiagnostics(gameData, current_port)
+
+                                    # convert data to a format that can be sent through a socket
+                                    gameDataStr = ','.join(map(str, gameData))
+
+                                    # send the data
+                                    sock.send(gameDataStr.encode())
+                                    gameData[2] += 1
+
+                                # game is still going
+                                else:
+                                    gameData[3] = other_player_turn
+                                    players[0] = other_player_turn
+
+                            # correct player attempting to move in a filled space
+                            else:
+                                game_has_changed = False
+                                print("[*] Client requested an occupied space.")
+
+                        # wrong player attempting to move
                         else:
+                            game_has_changed = False
+                            print(f"[*] Wrong player attempted to move: {current_port}")
 
-                            # convert data to a format that can be sent through a socket
-                            gameDataStr = ','.join(map(str, gameData))
-
-                            # send the data
-                            sock.send(gameDataStr.encode())
-                            gameData[2] += 1
+                    # type terminate game type
+                    elif client_request[0] == 1:
+                        print(f"[*] Disconnected from {address}:{current_port}")
+                        for i in range(0, 1):
+                            if players[i] == current_port:
+                                players[i] = 0
+                        break
 
                     else:
+                        game_has_changed = False
 
-                        # convert data to a format that can be sent through a socket
-                        gameData[3] = 1
-                        gameDataStr = ','.join(map(str, gameData))
-
-                        # send the data
-                        sock.send(gameDataStr.encode())
-                        gameData[2] += 1
-
-                        print("[*] Client requested an occupied space.")
-
-                # type terminate game type
-                elif client_request[0] == 1:
-                    print(f"[*] Disconnected from {address}:{port}")
-                    break
+                else:
+                    game_has_changed = False
 
         except ValueError as ve:
             print("[*] ValueError: ", format(ve.args[0]))
             print("[*] Disconnected.")
         except KeyboardInterrupt as ki:
             print("\n[*] Exiting...")
+        except ConnectionResetError as cre:
+            print("[*] ConnectionResetError.")
+        except BrokenPipeError as bp:
+            print(f"[*] Disconnected from {address}:{current_port}")
+
+        if gameData[3] <= 2:
+            if players[1] == current_port:
+                players[1] = 0
+            elif players[2] == current_port:
+                players[2] = 0
+
+        print(f"[*] Players: {players}")
 
 
 # START
