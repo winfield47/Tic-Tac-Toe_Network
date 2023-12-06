@@ -77,23 +77,26 @@ def convertSpotValue(spot):
     if spot == 2:
         return "X"
     else:
-        return "convertSpotValue ERROR: Bad spot value: " + str(spot)
+        return "E"
 
 
 def printGameBoard(spots, place=0):
     # clear the screen
     os.system('cls' if os.name == 'nt' else 'clear')
-    # then print the board
-    print("Current Game: ")
-    print("+---+---+---+")
-    count = 0
-    for spot in spots:
-        count += 1
-        # display the numbers for each space slowly
-        # print the spot
-        print("| " + (str(place) if (count == place and spot == 0) else convertSpotValue(spot)), end=" ")
-        if count % 3 == 0:
-            print(f"| <- {count - 2}-{count}\n+---+---+---+")
+    # authenticate the quality of the data in spots
+    # ignore bad data
+    if 13 not in spots:  # 13 in spots means that all the gameData was given: this is bad
+        # then print the board
+        print("Current Game: ")
+        print("+---+---+---+")
+        count = 0
+        for spot in spots:
+            count += 1
+            # display the numbers for each space slowly
+            # print the spot
+            print("| " + (str(place) if (count == place and spot == 0) else convertSpotValue(spot)), end=" ")
+            if count % 3 == 0:
+                print(f"| <- {count - 2}-{count}\n+---+---+---+")
 
     clear_input_buffer()
 
@@ -165,6 +168,7 @@ def main():
                                 printGameBoard(gameData[4:])
 
                                 # this should only be True here if the input wasn't accepted by the server
+                                # and THAT is only when the spot has been taken already
                                 if moveWasJustSent:
                                     print("That spot is taken!")
                                 else:
@@ -200,7 +204,9 @@ def main():
                                 # display the current board
                                 printGameBoard(gameData[4:], numerical_space)
                                 print(f"You are playing as '{convertSpotValue(myTurn)}'")
-                                print("Waiting for other player's move...")
+                                print("Waiting for opponent...")
+                                if not moveWasJustSent:
+                                    print("(Computer plays for absent opponents.)")
                                 moveWasJustSent = False
                                 numerical_space += 1
 
@@ -239,7 +245,7 @@ def main():
                         time.sleep(1)
                         printGameBoard(gameData[4:], 1)
                         print(f"You are playing as '{convertSpotValue(myTurn)}'")
-                        print("Waiting for other player's move...")
+                        print("Waiting for opponent...")
                         needs_tutorial = True
 
                     # if the server sends bad data
@@ -257,8 +263,8 @@ def main():
 
                         return
 
-            displayWhoWon(gameData)
             printGameBoard(gameData[4:])
+            displayWhoWon(gameData)
             print("Game over!")
 
             time.sleep(1)

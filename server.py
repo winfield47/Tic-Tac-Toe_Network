@@ -33,10 +33,10 @@ def isGameOver(gameData):
         a, b, c = condition
         if gameBoard[a] == gameBoard[b] == gameBoard[c] == 1:
             gameData[3] = 4
-            return True  # Player has won
+            return True  # O has won
         if gameBoard[a] == gameBoard[b] == gameBoard[c] == 2:
             gameData[3] = 5
-            return True  # Computer has won
+            return True  # X has won
 
     return False  # The game is not over yet
 
@@ -62,16 +62,42 @@ def printGameBoard(spots):
             print("|\n+---+---+---+")
 
 
+# run this function when there are no other players
 def computerTurn(gameData):
+    print("[*] Computer is taking a turn...")
     empty_spots = [i for i in range(9) if gameData[i + 4] == 0]
+
+    # Check for winning moves
+    for spot in empty_spots:
+        temp_game_data = gameData.copy()
+        temp_game_data[4 + spot] = players[0]
+        if isGameOver(temp_game_data):
+            gameData[4 + spot] = players[0]
+            gameData[3] = 3 - players[0]
+            players[0] = 3 - players[0]
+            return
+
+    # Check for blocking opponent's winning moves
+    for spot in empty_spots:
+        temp_game_data = gameData.copy()
+        temp_game_data[4 + spot] = 3 - players[0]
+        if isGameOver(temp_game_data):
+            gameData[4 + spot] = players[0]
+            gameData[3] = 3 - players[0]
+            players[0] = 3 - players[0]
+            return
+
+    # If no winning or blocking moves, choose a random empty spot
     if empty_spots:
         computer_choice = random.choice(empty_spots)
-        gameData[4 + computer_choice] = 2  # Computer's move (2 for X)
-        gameData[3] = 2
+        gameData[4 + computer_choice] = players[0]
+        gameData[3] = 3 - players[0]
+        players[0] = 3 - players[0]
     else:
-        print("It's a draw!")
+        print("[*] Computer has no moves to take.")
 
 
+# debugging on the server console
 def displayDiagnostics(gameData, current_port):
     # print the game data
     print(f"[*] Players: {players}")
@@ -121,7 +147,7 @@ def main():
         print("[*] OSError: Address already in use.")
     except KeyboardInterrupt as ki:
         print("\n[*] Exiting...")
-    
+
 
 # Send data back to the connecting client:
 def handle_client(client_socket, address, current_port):
@@ -131,6 +157,7 @@ def handle_client(client_socket, address, current_port):
 
             # use this to manage when to update the GUI on the server's side
             game_has_changed = True
+            time_until_computer_moves = 10
 
             # store the current_port of each player
             if players[1] == 0:
@@ -171,16 +198,11 @@ def handle_client(client_socket, address, current_port):
                     sock.send(gameDataStr.encode())
                     gameData[2] += 1
 
-                    # reset the game information but keep send-count
-                    print(f"[*] Game data before reset: {gameData}")
-                    print(f"[*] Players: {players}")
-                    gameData[4:] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
-                    # reset send count to avoid reaching unreasonably high numbers
-                    if gameData[2] > 999:
-                        gameData[2] = 1
-                    print(f"[*] Game data after reset:  {gameData}")
+                    # reset the game
                     gameData[3] = 1
                     players[0] = 1
+
+                    # reset the players
                     players[1] = 0
                     players[2] = 0
                     break
@@ -228,15 +250,6 @@ def handle_client(client_socket, address, current_port):
                                 gameData[requested_spot] = players[0]  # the piece for the player: X/O
                                 game_has_changed = True
 
-                                # computer turn
-                                '''
-                                if not isGameOver(gameData):
-                                    # X's turn attempted
-                                    gameData[3] = 2
-                                    computerTurn(gameData)
-                                displayDiagnostics(gameData, current_port)
-                                '''
-
                                 # game over? (this check can also change the value of the game state)
                                 if isGameOver(gameData):
 
@@ -278,6 +291,28 @@ def handle_client(client_socket, address, current_port):
 
                 else:
                     game_has_changed = False
+                    if 0 in players:
+                        if time_until_computer_moves == 10:
+                            print("[*] Looking for opponent...")
+                        print(f"[*] Time until computer makes a move: {time_until_computer_moves}")
+                        time_until_computer_moves -= 1
+
+                        # Take computer's turn
+                        if time_until_computer_moves <= 0:
+                            computerTurn(gameData)
+
+                            # game over? (this check can also change the value of the game state)
+                            if isGameOver(gameData):
+                                displayDiagnostics(gameData, current_port)
+
+                                # convert data to a format that can be sent through a socket
+                                gameDataStr = ','.join(map(str, gameData))
+
+                                # send the data
+                                sock.send(gameDataStr.encode())
+                                gameData[2] += 1
+                    else:
+                        time_until_computer_moves = 10
 
         except ValueError as ve:
             print("[*] ValueError: ", format(ve.args[0]))
@@ -300,9 +335,22 @@ def handle_client(client_socket, address, current_port):
 
         print(f"[*] Players: {players}")
 
+        # reset the game if there are no players
+        if players[1] == 0 and players[2] == 0:
+            # reset the game information but keep send-count
+            print(f"[*] Game data before reset: {gameData}")
+            print(f"[*] Players: {players}")
+            gameData[4:] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+            # reset send count to avoid reaching unreasonably high numbers
+            if gameData[2] > 999:
+                gameData[2] = 1
+            print(f"[*] Game data after reset:  {gameData}")
+            gameData[3] = 1
+            players[0] = 1
+
 
 # START
 if __name__ == '__main__':
-    main()  
-    
+    main()
+
 
