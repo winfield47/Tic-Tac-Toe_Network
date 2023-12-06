@@ -86,6 +86,7 @@ def main():
             myTurn = 0
             moveWasJustSent = False
             numerical_space = 1
+            needs_tutorial = False
 
             while True:
 
@@ -120,10 +121,12 @@ def main():
                                     print("That spot is taken!")
                                 else:
                                     print(f"Your turn! -> '{convertSpotValue(myTurn)}'")
-                                # print("Spots go from left to right, then top to bottom:")
-                                # print("\tEx: 1 -> top left")
-                                # print("\tEx: 5 -> middle")
-                                # print("\tEx: 9 -> bottom right")
+                                if needs_tutorial:
+                                    print("Spots go from left to right, then top to bottom:")
+                                    print("\tEx: 1 -> top left")
+                                    print("\tEx: 5 -> middle")
+                                    print("\tEx: 9 -> bottom right")
+                                    needs_tutorial = False
 
                                 # take your turn
                                 request[2] = getTurn()
@@ -180,6 +183,7 @@ def main():
                     elif server_response[2] == 1:
                         print("Your piece will be O.")
                         time.sleep(1)
+                        needs_tutorial = True
 
                     # player is X
                     elif server_response[2] == 2:
@@ -188,6 +192,7 @@ def main():
                         printGameBoard(gameData[4:], 1)
                         print(f"You are playing as '{convertSpotValue(myTurn)}'")
                         print("Waiting for other player's move...")
+                        needs_tutorial = True
 
                     # if the server sends bad data
                     else:
