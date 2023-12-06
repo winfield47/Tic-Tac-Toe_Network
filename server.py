@@ -175,6 +175,9 @@ def handle_client(client_socket, address, current_port):
                     print(f"[*] Game data before reset: {gameData}")
                     print(f"[*] Players: {players}")
                     gameData[4:] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+                    # reset send count to avoid reaching unreasonably high numbers
+                    if gameData[2] > 999:
+                        gameData[2] = 1
                     print(f"[*] Game data after reset:  {gameData}")
                     gameData[3] = 1
                     players[0] = 1
@@ -270,6 +273,7 @@ def handle_client(client_socket, address, current_port):
                         break
 
                     else:
+                        print(f"f[*] Received a bad type protocol from {address}:{current_port}")
                         game_has_changed = False
 
                 else:
@@ -277,12 +281,15 @@ def handle_client(client_socket, address, current_port):
 
         except ValueError as ve:
             print("[*] ValueError: ", format(ve.args[0]))
-            print("[*] Disconnected.")
+            print(f"[*] Disconnected from {address}:{current_port}")
         except KeyboardInterrupt as ki:
             print("\n[*] Exiting...")
         except ConnectionResetError as cre:
             print("[*] ConnectionResetError.")
         except BrokenPipeError as bp:
+            print(f"[*] Disconnected from {address}:{current_port}")
+        except IndexError as ie:
+            print(f"[*] IndexError")
             print(f"[*] Disconnected from {address}:{current_port}")
 
         if gameData[3] <= 2:

@@ -10,6 +10,54 @@ import time
 import os
 
 
+def get_target_address():
+    # Set the default IPv4 address
+    default_address = "127.0.0.1"
+
+    try:
+        # Prompt the user for an IPv4 address
+        user_input = input(f"Please enter a TicTacToe IPv4 address to connect to.\n(Default: {default_address}): ")
+
+        # Use the entered address if provided, otherwise use the default
+        target_address = user_input.strip() if user_input.strip() else default_address
+
+        # Validate the entered IPv4 address
+        socket.inet_pton(socket.AF_INET, target_address)
+
+        # Return the validated or default address
+        return target_address
+
+    except ValueError:
+        # Handle the case where the entered address is not a valid IPv4 address
+        print("Invalid IPv4 address.\nUsing the default address.")
+        time.sleep(3)
+        return default_address
+
+    except socket.error as e:
+        print(f"Socket error: {e}.\nUsing the default address.")
+        time.sleep(3)
+        return default_address
+
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}.\nUsing the default address.")
+        time.sleep(3)
+        return default_address
+
+    except KeyboardInterrupt:
+        print("\nKeyboardInterrupt")
+
+
+def clear_input_buffer():
+    try:
+        import msvcrt  # for Windows
+        while msvcrt.kbhit():
+            msvcrt.getch()
+    except ImportError:
+        import sys
+        import termios  # for Linux/macOS
+        termios.tcflush(sys.stdin, termios.TCIOFLUSH)
+
+
 def displayWhoWon(gameData):
     if gameData[3] == 3:
         print("Cat's game...")
@@ -47,6 +95,8 @@ def printGameBoard(spots, place=0):
         if count % 3 == 0:
             print(f"| <- {count - 2}-{count}\n+---+---+---+")
 
+    clear_input_buffer()
+
 
 def getTurn():
     while True:
@@ -62,10 +112,8 @@ def getTurn():
 
 def main():
 
-    user_input = input("Please enter a TicTacToe IPv4 address to connect to.\n(Default: 127.0.0.1): ")
-
     # IPv4 I want to connect to:
-    target_host = "127.0.0.1" if user_input == "" else user_input
+    target_address = get_target_address()
     # Port I want to connect to:
     target_port = 10101
 
@@ -78,8 +126,8 @@ def main():
             # create a socket object
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             # connect the client
-            client_socket.connect((target_host, target_port))
-            print(f"[*] Connected to {target_host}:{target_port}")
+            client_socket.connect((target_address, target_port))
+            print(f"[*] Connected to {target_address}:{target_port}")
 
             # base data for gameData
             gameData = [0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -222,12 +270,22 @@ def main():
             client_socket.close()
             continueKey = input("Continue playing? (Y/n)?: ")
 
-    except KeyboardInterrupt as ki:
+    except KeyboardInterrupt:
         print("\n[*] Exiting...")
 
     except ConnectionRefusedError as cre:
         print("ConnectionRefusedError: ", format(cre.args[0]))
         print("It's possible the IPv4 Address you entered is incorrect.\nTry using: 127.0.0.1")
+
+    except ValueError as ve:
+        print("ValueError: ", format(ve.args[0]))
+
+    except TypeError:
+        print("\n[*] Exiting...")
+
+    # clear the screen
+    time.sleep(1)
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 if __name__ == "__main__":
