@@ -1,0 +1,299 @@
+Script started on Mon Nov 20 22:47:15 2023
+Restored session: Mon Nov 20 22:47:11 PST 2023
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m22:47:15[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004hc ppyto hon client.py[1m [0m[0m [?2004l
+Please enter a TicTacToe IPv4 address to connect to.
+(Ex: 10.0.0.1): 1.0.2.1
+^C
+[*] Exiting...
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m22:47:40[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004hpython client.py[?2004l
+Please enter a TicTacToe IPv4 address to connect to.
+(Ex: 10.0.0.1): 127.0.0.1
+[*] Connected to 127.0.0.1:10101
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 1 5
+[*] Connected to 127.0.0.1:10101
++---+---+---+
+|   |   |   |
++---+---+---+
+|   | O |   |
++---+---+---+
+|   | X |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 4
+[*] Connected to 127.0.0.1:10101
++---+---+---+
+|   |   |   |
++---+---+---+
+| O | O |   |
++---+---+---+
+| X | X |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 3
+[*] Connected to 127.0.0.1:10101
++---+---+---+
+| X |   | O |
++---+---+---+
+| O | O |   |
++---+---+---+
+| X | X |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 2
+[*] Connected to 127.0.0.1:10101
++---+---+---+
+| X | O | O |
++---+---+---+
+| O | O | X |
++---+---+---+
+| X | X |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 9
+Cat's game...
++---+---+---+
+| X | O | O |
++---+---+---+
+| O | O | X |
++---+---+---+
+| X | X | O |
++---+---+---+
+Game over!
+Continue playing? (Y/n)?: 
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 0
+Invalid choice. Please choose a number between 1 and 9.
+Choice: asdfjkl;
+Invalid input. Please enter a number.
+Choice: 9
++---+---+---+
+|   | X |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   | O |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 9
+Spot already occupied. Please choose an empty spot.
+Choice: 2
+Spot already occupied. Please choose an empty spot.
+Choice: 0
+Invalid choice. Please choose a number between 1 and 9.
+Choice: asdf
+Invalid input. Please enter a number.
+Choice: 6
++---+---+---+
+|   | X |   |
++---+---+---+
+|   |   | O |
++---+---+---+
+|   | X | O |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 4
++---+---+---+
+| X | X |   |
++---+---+---+
+| O |   | O |
++---+---+---+
+|   | X | O |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 7
+Computer wins!
++---+---+---+
+| X | X |   |
++---+---+---+
+| O | X | O |
++---+---+---+
+| O | X | O |
++---+---+---+
+Game over!
+Continue playing? (Y/n)?: 
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 1
++---+---+---+
+| O |   |   |
++---+---+---+
+| X |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 2
++---+---+---+
+| O | O |   |
++---+---+---+
+| X |   |   |
++---+---+---+
+|   | X |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 3
+Player wins!
++---+---+---+
+| O | O | O |
++---+---+---+
+| X |   |   |
++---+---+---+
+|   | X |   |
++---+---+---+
+Game over!
+Continue playing? (Y/n)?: n
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m22:50:02[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004hpython client.py             p  python client.py[?2004l
+Please enter a TicTacToe IPv4 address to connect to.
+(Ex: 10.0.0.1): 127.0.0.1
+[*] Connected to 127.0.0.1:10101
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 1
+[*] Connected to 127.0.0.1:10101
++---+---+---+
+| O | X |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 2 2
+Spot already occupied. Please choose an empty spot.
+Choice: 1
+Spot already occupied. Please choose an empty spot.
+Choice: 3
+[*] Connected to 127.0.0.1:10101
++---+---+---+
+| O | X | O |
++---+---+---+
+|   |   | X |
++---+---+---+
+|   |   |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 5
+[*] Connected to 127.0.0.1:10101
++---+---+---+
+| O | X | O |
++---+---+---+
+|   | O | X |
++---+---+---+
+|   |   | X |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top left
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 7
+Player wins!
++---+---+---+
+| O | X | O |
++---+---+---+
+|   | O | X |
++---+---+---+
+| O |   | X |
++---+---+---+
+Game over!
+Continue playing? (Y/n)?: n
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m23:01:39[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004hpython client.py[?2004l
+Please enter a TicTacToe IPv4 address to connect to.
+(Ex: 10.0.0.1): 127.0.0.1
+ConnectionRefusedError:  61
+It's possible the IPv4 Address you entered is incorrect.
+Try using: 127.0.0.1
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m23:02:14[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004heexit[?2004l
+
+Saving session...
+...saving history...truncating history files...
+...completed.
+
+Script done on Mon Nov 20 23:02:54 2023

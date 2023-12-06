@@ -1,0 +1,127 @@
+Script started on Sun Nov  5 00:23:34 2023
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m0:23:34[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004hexitpython3 server.py[17Dcd Code/Network\ Systems/PythonNetworks/tcp_networks/tictactoe_network[K[A[10Cexit[K[1B[K[A[41Cpython3 client.py[?2004l[1B+---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top-right
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 5
+
++---+---+---+
+|   |   | X |
++---+---+---+
+|   | O |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top-right
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 1
+
++---+---+---+
+| O |   | X |
++---+---+---+
+| X | O |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top-right
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 9
+
+You win!
++---+---+---+
+| O | X | X |
++---+---+---+
+| X | O |   |
++---+---+---+
+|   |   | O |
++---+---+---+
+Game over!
+Continue playing? (y/n)?: y
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top-right
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 2
+
++---+---+---+
+| X | O |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top-right
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 3
+
++---+---+---+
+| X | O | O |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   | X |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top-right
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 4
+
++---+---+---+
+| X | O | O |
++---+---+---+
+| O |   |   |
++---+---+---+
+|   | X | X |
++---+---+---+
+Please enter the position you'd like to place an 'O'
+(left to right, then top to bottom):
+Ex: 1 -> top-right
+Ex: 5 -> middle
+Ex: 9 -> bottom right
+Choice: 5
+
+You lose!
++---+---+---+
+| X | O | O |
++---+---+---+
+| O | O |   |
++---+---+---+
+| X | X | X |
++---+---+---+
+Game over!
+Continue playing? (y/n)?: n
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m0:24:10[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004heexit[?2004l
+
+Saving session...
+...copying shared history...
+...saving history...truncating history files...
+...completed.
+
+Script done on Sun Nov  5 00:24:19 2023

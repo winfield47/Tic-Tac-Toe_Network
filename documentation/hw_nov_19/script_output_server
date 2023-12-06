@@ -1,0 +1,351 @@
+Script started on Mon Nov 20 22:46:20 2023
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m22:46:20[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004hdocker compose -f ds-compose.yml up -d[38Dcat Dockerfil[2C                       [24D[14Ddocker compose -f ds-compose.yml up -d[38D                                      [38Ddocker compose -f ds-compose.yml up -d[38Dcat Dockerfil[2C                       [24D[14Ddocker compose -f ds-compose.yml up -d[38D                                      [38Dppython server.py[1m [0m[0m [?2004l
+[*] Listening on 0.0.0.0:10101
+[*] Player's turn:
+[*] Send count: 1
++---+---+---+
+|   |   |   |
++---+---+---+
+|   | O |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Accepted connection from 127.0.0.1:57382
+[*] Computer's turn:
+[*] Send count: 2
++---+---+---+
+|   |   |   |
++---+---+---+
+|   | O |   |
++---+---+---+
+|   | X |   |
++---+---+---+
+[*] Player's turn:
+[*] Send count: 3
++---+---+---+
+|   |   |   |
++---+---+---+
+| O | O |   |
++---+---+---+
+|   | X |   |
++---+---+---+
+[*] Computer's turn:
+[*] Send count: 4
++---+---+---+
+|   |   |   |
++---+---+---+
+| O | O |   |
++---+---+---+
+| X | X |   |
++---+---+---+
+[*] Player's turn:
+[*] Send count: 5
++---+---+---+
+|   |   | O |
++---+---+---+
+| O | O |   |
++---+---+---+
+| X | X |   |
++---+---+---+
+[*] Computer's turn:
+[*] Send count: 6
++---+---+---+
+| X |   | O |
++---+---+---+
+| O | O |   |
++---+---+---+
+| X | X |   |
++---+---+---+
+[*] Player's turn:
+[*] Send count: 7
++---+---+---+
+| X | O | O |
++---+---+---+
+| O | O |   |
++---+---+---+
+| X | X |   |
++---+---+---+
+[*] Computer's turn:
+[*] Send count: 8
++---+---+---+
+| X | O | O |
++---+---+---+
+| O | O | X |
++---+---+---+
+| X | X |   |
++---+---+---+
+[*] Player's turn:
+[*] Send count: 9
++---+---+---+
+| X | O | O |
++---+---+---+
+| O | O | X |
++---+---+---+
+| X | X | O |
++---+---+---+
+[*] Cat's game...
+[*] Player's turn:
+[*] Send count: 10
++---+---+---+
+| X | O | O |
++---+---+---+
+| O | O | X |
++---+---+---+
+| X | X | O |
++---+---+---+
+[*] Game data before reset: [0, 13, 10, 1, 2, 1, 1, 1, 1, 2, 2, 2, 1]
+[*] Game data after reset:  [0, 13, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[*] Game start!
+[*] Send count: 10
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Player's turn:
+[*] Send count: 10
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   | O |
++---+---+---+
+[*] Computer's turn:
+[*] Send count: 11
++---+---+---+
+|   | X |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   | O |
++---+---+---+
+[*] Player's turn:
+[*] Send count: 12
++---+---+---+
+|   | X |   |
++---+---+---+
+|   |   | O |
++---+---+---+
+|   |   | O |
++---+---+---+
+[*] Computer's turn:
+[*] Send count: 13
++---+---+---+
+|   | X |   |
++---+---+---+
+|   |   | O |
++---+---+---+
+|   | X | O |
++---+---+---+
+[*] Player's turn:
+[*] Send count: 14
++---+---+---+
+|   | X |   |
++---+---+---+
+| O |   | O |
++---+---+---+
+|   | X | O |
++---+---+---+
+[*] Computer's turn:
+[*] Send count: 15
++---+---+---+
+| X | X |   |
++---+---+---+
+| O |   | O |
++---+---+---+
+|   | X | O |
++---+---+---+
+[*] Player's turn:
+[*] Send count: 16
++---+---+---+
+| X | X |   |
++---+---+---+
+| O |   | O |
++---+---+---+
+| O | X | O |
++---+---+---+
+[*] Computer wins!
+[*] Computer's turn:
+[*] Send count: 17
++---+---+---+
+| X | X |   |
++---+---+---+
+| O | X | O |
++---+---+---+
+| O | X | O |
++---+---+---+
+[*] Game data before reset: [0, 13, 17, 2, 2, 2, 0, 1, 2, 1, 1, 2, 1]
+[*] Game data after reset:  [0, 13, 17, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[*] Game start!
+[*] Send count: 17
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Player's turn:
+[*] Send count: 18
++---+---+---+
+| O |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Computer's turn:
+[*] Send count: 19
++---+---+---+
+| O |   |   |
++---+---+---+
+| X |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Player's turn:
+[*] Send count: 20
++---+---+---+
+| O | O |   |
++---+---+---+
+| X |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Computer's turn:
+[*] Send count: 21
++---+---+---+
+| O | O |   |
++---+---+---+
+| X |   |   |
++---+---+---+
+|   | X |   |
++---+---+---+
+[*] Player's turn:
+[*] Send count: 22
++---+---+---+
+| O | O | O |
++---+---+---+
+| X |   |   |
++---+---+---+
+|   | X |   |
++---+---+---+
+[*] Player wins!
+[*] Player's turn:
+[*] Send count: 23
++---+---+---+
+| O | O | O |
++---+---+---+
+| X |   |   |
++---+---+---+
+|   | X |   |
++---+---+---+
+[*] Game data before reset: [0, 13, 23, 1, 1, 1, 1, 2, 0, 0, 0, 2, 0]
+[*] Game data after reset:  [0, 13, 23, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[*] Game start!
+[*] Send count: 23
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Player's turn:
+[*] Send count: 1
++---+---+---+
+| O |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Accepted connection from 127.0.0.1:57541
+[*] Computer's turn:
+[*] Send count: 2
++---+---+---+
+| O | X |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Player's turn:
+[*] Send count: 3
++---+---+---+
+| O | X | O |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Computer's turn:
+[*] Send count: 4
++---+---+---+
+| O | X | O |
++---+---+---+
+|   |   | X |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Player's turn:
+[*] Send count: 5
++---+---+---+
+| O | X | O |
++---+---+---+
+|   | O | X |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Computer's turn:
+[*] Send count: 6
++---+---+---+
+| O | X | O |
++---+---+---+
+|   | O | X |
++---+---+---+
+|   |   | X |
++---+---+---+
+[*] Player's turn:
+[*] Send count: 7
++---+---+---+
+| O | X | O |
++---+---+---+
+|   | O | X |
++---+---+---+
+| O |   | X |
++---+---+---+
+[*] Player wins!
+[*] Player's turn:
+[*] Send count: 8
++---+---+---+
+| O | X | O |
++---+---+---+
+|   | O | X |
++---+---+---+
+| O |   | X |
++---+---+---+
+[*] Game data before reset: [0, 13, 8, 1, 1, 2, 1, 0, 1, 2, 1, 0, 2]
+[*] Game data after reset:  [0, 13, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[*] Game start!
+[*] Send count: 8
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+^C
+[*] Exiting...
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m23:02:01[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004heexit[?2004l
+
+Saving session...
+...copying shared history...
+...saving history...truncating history files...
+...completed.
+
+Script done on Mon Nov 20 23:02:56 2023

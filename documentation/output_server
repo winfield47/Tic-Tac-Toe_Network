@@ -1,0 +1,76 @@
+Script started on Sun Nov  5 00:23:24 2023
+Restored session: Sun Nov  5 00:22:52 PDT 2023
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m0:23:24[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004hexitpython3 server.py[?2004l
+[*] Listening on 0.0.0.0:10101
+[*] Accepted connection from 127.0.0.1:63082
++---+---+---+
+|   |   | X |
++---+---+---+
+|   | O |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Accepted connection from 127.0.0.1:63083
++---+---+---+
+| O |   | X |
++---+---+---+
+| X | O |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Accepted connection from 127.0.0.1:63084
++---+---+---+
+| O | X | X |
++---+---+---+
+| X | O |   |
++---+---+---+
+|   |   | O |
++---+---+---+
+[*] Accepted connection from 127.0.0.1:63085
++---+---+---+
+| X | O |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Accepted connection from 127.0.0.1:63086
++---+---+---+
+| X | O | O |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   | X |
++---+---+---+
+[*] Accepted connection from 127.0.0.1:63087
++---+---+---+
+| X | O | O |
++---+---+---+
+| O |   |   |
++---+---+---+
+|   | X | X |
++---+---+---+
+[*] Accepted connection from 127.0.0.1:63088
++---+---+---+
+| X | O | O |
++---+---+---+
+| O | O |   |
++---+---+---+
+| X | X | X |
++---+---+---+
+^CTraceback (most recent call last):
+  File "/Users/winfield/Code/Network Systems/PythonNetworks/tcp_networks/tictactoe_network/server.py", line 72, in <module>
+    main()  
+  File "/Users/winfield/Code/Network Systems/PythonNetworks/tcp_networks/tictactoe_network/server.py", line 49, in main
+    client, address = server.accept()
+  File "/opt/homebrew/Caskroom/miniconda/base/lib/python3.10/socket.py", line 293, in accept
+    fd, addr = self._accept()
+KeyboardInterrupt
+
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m0:24:15[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004heexit[?2004l
+
+Saving session...
+...saving history...truncating history files...
+...completed.
+
+Script done on Sun Nov  5 00:24:17 2023
