@@ -13,6 +13,8 @@ import os
 
 
 def get_target_address():
+    # clear the screen
+    os.system('cls' if os.name == 'nt' else 'clear')
     # Set the default IPv4 address
     default_address = "127.0.0.1"
 
@@ -47,6 +49,41 @@ def get_target_address():
 
     except KeyboardInterrupt:
         print("\nKeyboardInterrupt")
+
+
+# get a server port to be able to host multiple games
+def get_target_port():
+    # clear the screen
+    os.system('cls' if os.name == 'nt' else 'clear')
+    # Set the default port
+    default_port = 10101
+
+    while True:
+        try:
+            # Prompt the user for a port number
+            user_input = input(f"Please enter the port number to connect to.\n(Default: {default_port}): ")
+
+            # Use the entered port if provided, otherwise use the default
+            port = int(user_input) if user_input.strip() else default_port
+
+            # Validate the entered port number
+            if 0 < port < 65535:
+                return port
+            else:
+                # clear the screen
+                os.system('cls' if os.name == 'nt' else 'clear')
+                print("Invalid port number. Please enter a positive value below 65535.")
+                time.sleep(1)
+
+        except ValueError:
+            # clear the screen
+            os.system('cls' if os.name == 'nt' else 'clear')
+            print("Invalid input. Please enter a valid integer.")
+            time.sleep(1)
+
+        except KeyboardInterrupt:
+            print("\nKeyboardInterrupt")
+            break
 
 
 def clear_input_buffer():
@@ -119,7 +156,7 @@ def main():
     # IPv4 I want to connect to:
     target_address = get_target_address()
     # Port I want to connect to:
-    target_port = 10101
+    target_port = get_target_port()
 
     # TicTacToe
     continueKey = 'y'

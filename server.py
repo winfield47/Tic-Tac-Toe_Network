@@ -13,8 +13,6 @@ import time
 
 # What IP I am listening to:
 server_IPv4 = '0.0.0.0'
-# What current_port I am listening on:
-server_port = 10101
 
 # global game data for both clients
 gameData = [0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -22,6 +20,26 @@ players = [1, 0, 0]  # [current player], [player 1's current_port], [player 2's 
 
 # CONSTANTS
 COMPUTER_FILL_IN_TIMER = 15
+DEFAULT_PORT = 10101
+
+
+# get a server port to be able to host multiple games
+def get_server_port():
+    while True:
+        try:
+            # Prompt the user for a port number
+            user_input = input(f"Please enter the port number to listen on (above 1024):\n(Default: {DEFAULT_PORT}): ")
+
+            # Use the entered port if provided, otherwise use the default
+            port = int(user_input) if user_input.strip() else DEFAULT_PORT
+
+            # Validate the entered port number
+            if 1024 < port < 65535:
+                return port
+            else:
+                print("Invalid port number. Please enter a value above 1024.")
+        except ValueError:
+            print("Invalid input. Please enter a valid integer.")
 
 
 # this checks to see if the game is over AND edits the value of the global variable 'gameData'
@@ -140,6 +158,7 @@ def main():
     # make a TCP server
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
+        server_port = get_server_port()
         server.bind((server_IPv4, server_port))
         # we don't need a large backlog (5)
         server.listen(5)
@@ -279,7 +298,7 @@ def handle_client(client_socket, address, current_port):
                                 client_request[2] = int(client_request[2])
 
                                 # check to see if the client's data is in range
-                                if client_request[2] in range(1, 9):
+                                if 1 <= client_request[2] <= 9:
 
                                     # if the expected player's current_port is the current current_port, continue
                                     if players[players[0]] == current_port:
