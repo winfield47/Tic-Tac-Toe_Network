@@ -5,6 +5,7 @@
 # https://learning.oreilly.com/library/view/black-hat-python/9781098128906/c02.xhtml#h1-501126c02-0004
 
 import socket
+import json
 import threading
 import random
 import time
@@ -163,28 +164,38 @@ def handle_client(client_socket, address, current_port):
             if players[1] == 0:
                 players[1] = current_port
                 # convert data to a format that can be sent through a socket
-                client_setup = ','.join(map(str, [3, 3, 1]))
+                client_setup = json.dumps([3, 3, 1])
                 # send the data
                 sock.send(client_setup.encode())
                 gameData[2] += 1
             elif players[2] == 0 and players[1] != current_port:
                 players[2] = current_port
                 # convert data to a format that can be sent through a socket
-                client_setup = ','.join(map(str, [3, 3, 2]))
+                client_setup = json.dumps([3, 3, 2])
                 # send the data
                 sock.send(client_setup.encode())
                 gameData[2] += 1
             else:
                 print("[*] Spaces full. No more players may join.")
                 # convert data to a format that can be sent through a socket
-                client_setup = ','.join(map(str, [3, 3, 0]))
+                client_setup = json.dumps([3, 3, 0])
                 # send the data
                 sock.send(client_setup.encode())
                 gameData[2] += 1
 
             while True:
 
-                time.sleep(1)
+                # # # # #                         # # # # #
+                # # # #                             # # # #
+                # # # \/ IMPORTANT : DO NOT DELETE \/ # # #
+                # #                                     # #
+                #                                         #
+                time.sleep(1)  # <-- MAINTAINS FLOW-CONTROL
+                #                                         #
+                # #                                     # #
+                # # # /\ IMPORTANT : DO NOT DELETE /\ # # #
+                # # # #                             # # # #
+                # # # # #                         # # # # #
 
                 if game_has_changed:
                     displayDiagnostics(gameData, current_port)
@@ -193,9 +204,9 @@ def handle_client(client_socket, address, current_port):
                 if gameData[3] > 2:
 
                     # convert data to a format that can be sent through a socket
-                    gameDataStr = ','.join(map(str, gameData))
+                    gameDataFormatted = json.dumps(gameData)
                     # send the data
-                    sock.send(gameDataStr.encode())
+                    sock.send(gameDataFormatted.encode())
                     gameData[2] += 1
 
                     # reset the game
@@ -211,9 +222,9 @@ def handle_client(client_socket, address, current_port):
                     gameData[3] = 1
 
                 # convert data to a format that can be sent through a socket
-                gameDataStr = ','.join(map(str, gameData))
+                gameDataFormatted = json.dumps(gameData)
                 # send the data
-                sock.send(gameDataStr.encode())
+                sock.send(gameDataFormatted.encode())
                 gameData[2] += 1
 
                 # if the correct player has the current port
@@ -222,8 +233,7 @@ def handle_client(client_socket, address, current_port):
                     # get the game data from client
                     received_data = sock.recv(1024)
                     gameData[2] += 1
-                    response_raw = received_data.decode()
-                    client_request = list(map(int, response_raw.split(',')))
+                    client_request = json.loads(received_data.decode())
 
                     # client move request type
                     if client_request[0] == 2:
@@ -256,10 +266,10 @@ def handle_client(client_socket, address, current_port):
                                     displayDiagnostics(gameData, current_port)
 
                                     # convert data to a format that can be sent through a socket
-                                    gameDataStr = ','.join(map(str, gameData))
+                                    gameDataFormatted = json.dumps(gameData)
 
                                     # send the data
-                                    sock.send(gameDataStr.encode())
+                                    sock.send(gameDataFormatted.encode())
                                     gameData[2] += 1
 
                                 # game is still going
@@ -306,10 +316,10 @@ def handle_client(client_socket, address, current_port):
                                 displayDiagnostics(gameData, current_port)
 
                                 # convert data to a format that can be sent through a socket
-                                gameDataStr = ','.join(map(str, gameData))
+                                gameDataFormatted = json.dumps(gameData)
 
                                 # send the data
-                                sock.send(gameDataStr.encode())
+                                sock.send(gameDataFormatted.encode())
                                 gameData[2] += 1
                     else:
                         time_until_computer_moves = 10

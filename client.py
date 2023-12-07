@@ -5,6 +5,7 @@
 # https://learning.oreilly.com/library/view/black-hat-python/9781098128906/c02.xhtml#h1-501126c02-0003
 
 import socket
+import json
 import random
 import time
 import os
@@ -96,7 +97,7 @@ def printGameBoard(spots, place=0):
             # print the spot
             print("| " + (str(place) if (count == place and spot == 0) else convertSpotValue(spot)), end=" ")
             if count % 3 == 0:
-                print(f"| <- {count - 2}-{count}\n+---+---+---+")
+                print(f"| <- {count - 2}, {count - 1}, {count}\n+---+---+---+")
 
     clear_input_buffer()
 
@@ -145,9 +146,7 @@ def main():
                 # receive some data
                 server_response = client_socket.recv(4096)
                 # print what was sent to us from the server we connected to
-                server_response = server_response.decode()
-                # print(f"server response: {server_response}")
-                server_response = list(map(int, server_response.split(',')))
+                server_response = json.loads(server_response.decode())
 
                 # initialize the data i need to send
                 request = [2, 3, 0]  # 0 is a placeholder
@@ -184,7 +183,7 @@ def main():
                                 request[2] = getTurn()
 
                                 # convert data to a format that can be sent through a socket
-                                request = ','.join(map(str, request))
+                                request = json.dumps(request)
                                 # send the data
                                 client_socket.send(request.encode())
 
@@ -224,8 +223,7 @@ def main():
                         print("Try again later...")
 
                         # tell the server that we are done playing
-                        msg = [1, 2]
-                        msg = ','.join(map(str, msg))
+                        msg = json.dumps([1, 2])
                         client_socket.send(msg.encode())
 
                         # Close the client nicely
@@ -254,8 +252,7 @@ def main():
                         print(f"DATA SENT: {server_response}")
 
                         # tell the server that we are done playing
-                        msg = [1, 2]
-                        msg = ','.join(map(str, msg))
+                        msg = json.dumps([1, 2])
                         client_socket.send(msg.encode())
 
                         # Close the client nicely
@@ -270,7 +267,7 @@ def main():
             time.sleep(1)
 
             # tell the server that we are done playing
-            msg = ','.join(map(str, [1, 2]))
+            msg = json.dumps([1, 2])
             client_socket.send(msg.encode())
             # Close the client nicely
             client_socket.close()
