@@ -88,14 +88,19 @@ def convertSpotValue(spot):
         return "E"
 
 
-def printGameBoard(spots, place=0):
+def printGameBoard(spots, opp_connected, comp_connected, place=0):
     # clear the screen
     os.system('cls' if os.name == 'nt' else 'clear')
     # authenticate the quality of the data in spots
     # ignore bad data
     if 13 not in spots:  # 13 in spots means that all the gameData was given: this is bad
         # then print the board
-        print("Current Game: ")
+        if opp_connected:
+            print("Current Game: You VS Player")
+        elif comp_connected:
+            print("Current Game: You VS Computer")
+        else:
+            print("Current Game: ")
         print("+---+---+---+")
         count = 0
         for spot in spots:
@@ -107,18 +112,6 @@ def printGameBoard(spots, place=0):
                 print(f"| <- {count - 2}, {count - 1}, {count}\n+---+---+---+")
 
     clear_input_buffer()
-
-
-def getTurn():
-    while True:
-        try:
-            choice = int(input("Choice: "))
-            if 1 <= choice <= 9:
-                return choice
-            else:
-                print("Invalid choice. Please choose a number between 1 and 9.")
-        except ValueError:
-            print("Invalid input. Please enter a number.")
 
 
 def main():
@@ -173,15 +166,8 @@ def main():
                             # if it's my turn currently
                             if gameData[3] == myTurn:
                                 # Take a Turn!
-                                printGameBoard(gameData[4:])
-
-                                # this should only be True here if the input wasn't accepted by the server
-                                # and THAT is only when the spot has been taken already
+                                printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing)
                                 print(f"Your turn! -> '{convertSpotValue(myTurn)}'")
-                                if opponent_is_connected:
-                                    print("VS. Player")
-                                elif computer_is_playing:
-                                    print("VS. Computer")
                                 if moveWasJustSent:
                                     print("That spot is taken!")
                                 if needs_tutorial:
@@ -192,7 +178,7 @@ def main():
                                     needs_tutorial = False
 
                                 # take your turn
-                                request[2] = getTurn()
+                                request[2] = input("Choice: ")
 
                                 # convert data to a format that can be sent through a socket
                                 request = json.dumps(request)
@@ -205,7 +191,7 @@ def main():
                             elif gameData[3] == 3 - myTurn:
 
                                 # just print the board, nothing fancy
-                                printGameBoard(gameData[4:])
+                                printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing)
                                 print(f"You are playing as '{convertSpotValue(myTurn)}'")
 
                                 '''
@@ -266,7 +252,7 @@ def main():
                     elif server_response[2] == 2:
                         print("Your piece will be X.")
                         time.sleep(1)
-                        printGameBoard(gameData[4:], 1)
+                        printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing, 1)
                         print(f"You are playing as '{convertSpotValue(myTurn)}'")
                         print("Waiting for opponent...")
                         needs_tutorial = True
@@ -304,7 +290,7 @@ def main():
                                     numerical_space = 1
 
                             # display the current board
-                            printGameBoard(gameData[4:], numerical_space)
+                            printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing, numerical_space)
                             print(f"You are playing as '{convertSpotValue(myTurn)}'")
                             if opponent_is_connected:
                                 print("Opponent disconnected!")
@@ -329,7 +315,7 @@ def main():
                                     numerical_space = 1
 
                             # display the current board
-                            printGameBoard(gameData[4:], numerical_space)
+                            printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing, numerical_space)
                             print(f"You are playing as '{convertSpotValue(myTurn)}'")
 
                             if opponent_is_connected:
@@ -345,7 +331,7 @@ def main():
                         if server_response[2] == 2:
 
                             # display the current board
-                            printGameBoard(gameData[4:])
+                            printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing)
                             print(f"You are playing as '{convertSpotValue(myTurn)}'")
                             if not computer_is_playing:
                                 print("Computer is filling in...")
@@ -354,6 +340,69 @@ def main():
                             computer_is_playing = True
                             opponent_is_connected = False
                             moveWasJustSent = False
+
+                # inform the client of their bad input
+                elif server_response[0] == 5:
+
+                    # validate quality of data
+                    if server_response[1] == 3:
+
+                        # client gave goggly-guk
+                        if server_response[2] == 0:
+
+                            # Take a Turn!
+                            printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing)
+                            print(f"Your turn! -> '{convertSpotValue(myTurn)}'")
+
+                            print("Invalid input. Please enter a number.")
+
+                            # take your turn
+                            request[2] = input("Choice: ")
+
+                            # convert data to a format that can be sent through a socket
+                            request = json.dumps(request)
+                            # send the data
+                            client_socket.send(request.encode())
+
+                            moveWasJustSent = True
+
+                        # client input is out-of-range
+                        if server_response[2] == 1:
+
+                            # Take a Turn!
+                            printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing)
+                            print(f"Your turn! -> '{convertSpotValue(myTurn)}'")
+                            if moveWasJustSent:
+                                print("Invalid choice. Please choose a number between 1 and 9.")
+
+                            # take your turn
+                            request[2] = input("Choice: ")
+
+                            # convert data to a format that can be sent through a socket
+                            request = json.dumps(request)
+                            # send the data
+                            client_socket.send(request.encode())
+
+                            moveWasJustSent = True
+
+                        # spot is taken!
+                        if server_response[2] == 2:
+
+                            # Take a Turn!
+                            printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing)
+                            print(f"Your turn! -> '{convertSpotValue(myTurn)}'")
+                            if moveWasJustSent:
+                                print("That spot is taken!")
+
+                            # take your turn
+                            request[2] = input("Choice: ")
+
+                            # convert data to a format that can be sent through a socket
+                            request = json.dumps(request)
+                            # send the data
+                            client_socket.send(request.encode())
+
+                            moveWasJustSent = True
 
             printGameBoard(gameData[4:])
             displayWhoWon(gameData, myTurn)

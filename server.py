@@ -51,6 +51,12 @@ def isGameOver(data):
     return False  # The game is not over yet
 
 
+def is_int(string):
+    if string and (string[0] == '-' and string[1:].isdigit() or string.isdigit()):
+        return True
+    return False
+
+
 def convertSpotValue(spot):
     if spot == 0:
         return " "
@@ -162,6 +168,16 @@ def handle_client(client_socket, address, current_port):
 
             # use this to manage when to update the GUI on the server's side
             game_has_changed = True
+
+            # type 5 protocol
+            client_request_diagnostic = -1
+            client_request_diagnostics = {
+                0: "[*] Client input is not an Integer.",
+                1: "[*] Client requested number out of range (1-9).",
+                2: "[*] Client requested an occupied space."
+            }
+
+            # CONSTANTS
             time_until_computer_moves = COMPUTER_FILL_IN_TIMER
 
             # store the current_port of each player
@@ -228,11 +244,22 @@ def handle_client(client_socket, address, current_port):
                 # if it's their turn
                 if players[players[0]] == current_port:
 
-                    # convert data to a format that can be sent through a socket
-                    gameDataFormatted = json.dumps(gameData)
-                    # send the data
-                    sock.send(gameDataFormatted.encode())
-                    gameData[2] += 1
+                    # tell the client that their move was bad
+                    if client_request_diagnostic >= 0:
+                        # convert data to a format that can be sent through a socket
+                        client_input_diagnostic = json.dumps([5, 3, client_request_diagnostic])
+                        # send the data
+                        sock.send(client_input_diagnostic.encode())
+                        gameData[2] += 1
+                        client_request_diagnostic = -1
+
+                    # continue as normal
+                    else:
+                        # convert data to a format that can be sent through a socket
+                        gameDataFormatted = json.dumps(gameData)
+                        # send the data
+                        sock.send(gameDataFormatted.encode())
+                        gameData[2] += 1
 
                     # listen to the client
                     received_data = sock.recv(1024)
@@ -242,54 +269,79 @@ def handle_client(client_socket, address, current_port):
                     # client move request type
                     if client_request[0] == 2:
 
-                        # if the expected player's current_port is the current current_port, continue
-                        if players[players[0]] == current_port:
+                        # authenticate data quality
+                        if client_request[1] == 3:
 
-                            # check to see if the requested spot is available
-                            requested_spot = 3 + client_request[2]
-                            if gameData[requested_spot] == 0:
+                            # check to see if the client's data is an integer
+                            if is_int(client_request[2]):
 
-                                # X's Turn
-                                if players[0] == 1:
-                                    other_player_turn = 2
+                                # now, make it an actual integer since we know it's safe
+                                client_request[2] = int(client_request[2])
 
-                                # O's Turn
-                                elif players[0] == 2:
-                                    other_player_turn = 1
+                                # check to see if the client's data is in range
+                                if client_request[2] in range(1, 9):
 
+                                    # if the expected player's current_port is the current current_port, continue
+                                    if players[players[0]] == current_port:
+
+                                        # check to see if the requested spot is available
+                                        requested_spot = 3 + client_request[2]
+                                        if gameData[requested_spot] == 0:
+
+                                            # X's Turn
+                                            if players[0] == 1:
+                                                other_player_turn = 2
+
+                                            # O's Turn
+                                            elif players[0] == 2:
+                                                other_player_turn = 1
+
+                                            else:
+                                                print("[*] CURRENT PLAYER CHECK ERROR")
+
+                                            # commit client's turn
+                                            gameData[requested_spot] = players[0]  # the piece for the player: X/O
+                                            game_has_changed = True
+
+                                            # game over? (this check can also change the value of the game state)
+                                            if isGameOver(gameData):
+
+                                                displayDiagnostics(gameData, current_port)
+
+                                                # convert data to a format that can be sent through a socket
+                                                gameDataFormatted = json.dumps(gameData)
+
+                                                # send the data
+                                                sock.send(gameDataFormatted.encode())
+                                                gameData[2] += 1
+
+                                            # game is still going
+                                            else:
+                                                gameData[3] = other_player_turn
+                                                players[0] = other_player_turn
+
+                                        # correct player attempting to move in a filled space
+                                        else:
+                                            game_has_changed = False
+                                            client_request_diagnostic = 2
+                                            print(client_request_diagnostics[client_request_diagnostic])
+
+                                    # wrong player attempting to move
+                                    else:
+                                        game_has_changed = False
+                                        print(f"[*] Wrong player attempted to move: {current_port}")
+
+                                # client request value is not in range
                                 else:
-                                    print("[*] CURRENT PLAYER CHECK ERROR")
+                                    game_has_changed = False
+                                    client_request_diagnostic = 1
+                                    print(client_request_diagnostics[client_request_diagnostic])
 
-                                # commit client's turn
-                                gameData[requested_spot] = players[0]  # the piece for the player: X/O
-                                game_has_changed = True
-
-                                # game over? (this check can also change the value of the game state)
-                                if isGameOver(gameData):
-
-                                    displayDiagnostics(gameData, current_port)
-
-                                    # convert data to a format that can be sent through a socket
-                                    gameDataFormatted = json.dumps(gameData)
-
-                                    # send the data
-                                    sock.send(gameDataFormatted.encode())
-                                    gameData[2] += 1
-
-                                # game is still going
-                                else:
-                                    gameData[3] = other_player_turn
-                                    players[0] = other_player_turn
-
-                            # correct player attempting to move in a filled space
+                            # client request value is not an int
                             else:
                                 game_has_changed = False
-                                print("[*] Client requested an occupied space.")
-
-                        # wrong player attempting to move
-                        else:
-                            game_has_changed = False
-                            print(f"[*] Wrong player attempted to move: {current_port}")
+                                client_request_diagnostic = 0
+                                print(client_request_diagnostics[client_request_diagnostic])
 
                     # type terminate game type
                     elif client_request[0] == 1:
@@ -323,8 +375,9 @@ def handle_client(client_socket, address, current_port):
                             # a computer will play instead of a player if a player doesn't connect for 10 seconds
                             if time_until_computer_moves == COMPUTER_FILL_IN_TIMER:
                                 print("[*] Looking for opponent...")
-                            if time_until_computer_moves != COMPUTER_FILL_IN_TIMER and time_until_computer_moves % 5 == 0:
-                                print(f"[*] Time until computer makes a move: {time_until_computer_moves}")
+                            if time_until_computer_moves != COMPUTER_FILL_IN_TIMER:
+                                if time_until_computer_moves % 5 == 0:
+                                    print(f"[*] Time until computer makes a move: {time_until_computer_moves}")
                             time_until_computer_moves -= 1
 
                             # if it has been 10 seconds with no opponent
@@ -368,9 +421,11 @@ def handle_client(client_socket, address, current_port):
             print("[*] ConnectionResetError.")
         except BrokenPipeError:
             print(f"[*] Disconnected from {address}:{current_port}")
-        except IndexError:
-            print(f"[*] IndexError")
+        except IndexError as ie:
+            print(f"[*] IndexError: {ie.args[0]}")
             print(f" -  Disconnected from {address}:{current_port}")
+        except TypeError as te:
+            print(f"[*] TypeError: {te.args[0]}")
 
         if gameData[3] <= 2:
             if players[1] == current_port:
