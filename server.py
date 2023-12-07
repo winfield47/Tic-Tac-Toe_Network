@@ -11,13 +11,13 @@ import random
 import time
 
 # What IP I am listening to:
-IP = '0.0.0.0'
+server_IPv4 = '0.0.0.0'
 # What current_port I am listening on:
-current_port = 10101
+server_port = 10101
 
 
-def isGameOver(gameData):
-    gameBoard = gameData[4:]
+def isGameOver(data):
+    gameBoard = data[4:]
     win_conditions = [
         # Rows
         [0, 1, 2], [3, 4, 5], [6, 7, 8],
@@ -28,15 +28,15 @@ def isGameOver(gameData):
     ]
 
     if 0 not in gameBoard:
-        gameData[3] = 3
+        data[3] = 3
         return True  # It's a draw, all spaces are filled
     for condition in win_conditions:
         a, b, c = condition
         if gameBoard[a] == gameBoard[b] == gameBoard[c] == 1:
-            gameData[3] = 4
+            data[3] = 4
             return True  # O has won
         if gameBoard[a] == gameBoard[b] == gameBoard[c] == 2:
-            gameData[3] = 5
+            data[3] = 5
             return True  # X has won
 
     return False  # The game is not over yet
@@ -64,60 +64,60 @@ def printGameBoard(spots):
 
 
 # run this function when there are no other players
-def computerTurn(gameData):
+def computerTurn(data):
     print("[*] Computer is taking a turn...")
-    empty_spots = [i for i in range(9) if gameData[i + 4] == 0]
+    empty_spots = [i for i in range(9) if data[i + 4] == 0]
 
     # Check for winning moves
     for spot in empty_spots:
-        temp_game_data = gameData.copy()
+        temp_game_data = data.copy()
         temp_game_data[4 + spot] = players[0]
         if isGameOver(temp_game_data):
-            gameData[4 + spot] = players[0]
-            gameData[3] = 3 - players[0]
+            data[4 + spot] = players[0]
+            data[3] = 3 - players[0]
             players[0] = 3 - players[0]
             return
 
     # Check for blocking opponent's winning moves
     for spot in empty_spots:
-        temp_game_data = gameData.copy()
+        temp_game_data = data.copy()
         temp_game_data[4 + spot] = 3 - players[0]
         if isGameOver(temp_game_data):
-            gameData[4 + spot] = players[0]
-            gameData[3] = 3 - players[0]
+            data[4 + spot] = players[0]
+            data[3] = 3 - players[0]
             players[0] = 3 - players[0]
             return
 
     # If no winning or blocking moves, choose a random empty spot
     if empty_spots:
         computer_choice = random.choice(empty_spots)
-        gameData[4 + computer_choice] = players[0]
-        gameData[3] = 3 - players[0]
+        data[4 + computer_choice] = players[0]
+        data[3] = 3 - players[0]
         players[0] = 3 - players[0]
     else:
         print("[*] Computer has no moves to take.")
 
 
 # debugging on the server console
-def displayDiagnostics(gameData, current_port):
+def displayDiagnostics(data, port):
     # print the game data
     print(f"[*] Players: {players}")
-    if gameData[3] == 1:
-        print(f"[*] O's turn: {current_port}")
-    elif gameData[3] == 2:
-        print(f"[*] X's turn: {current_port}")
-    elif gameData[3] == 3:
+    if data[3] == 1:
+        print(f"[*] O's turn: {port}")
+    elif data[3] == 2:
+        print(f"[*] X's turn: {port}")
+    elif data[3] == 3:
         print("[*] Cat's game...")
-    elif gameData[3] == 4:
+    elif data[3] == 4:
         print("[*] O wins!")
-    elif gameData[3] == 5:
+    elif data[3] == 5:
         print("[*] X wins!")
-    elif gameData[3] == 0:
+    elif data[3] == 0:
         print(f"[*] Game start!")
     else:
         print("[*] displayDiagnostics ERROR")
-    print(f"[*] Send count: {gameData[2]}")
-    printGameBoard(gameData[4:])
+    print(f"[*] Send count: {data[2]}")
+    printGameBoard(data[4:])
 
 
 # global game data for both clients
@@ -130,10 +130,10 @@ def main():
     # make a TCP server
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
-        server.bind((IP, current_port))
+        server.bind((server_IPv4, server_port))
         # we don't need a large backlog (5)
         server.listen(5)
-        print(f'[*] Listening on {IP}:{current_port}')
+        print(f'[*] Listening on {server_IPv4}:{server_port}')
 
         # Continuously listen for clients from any address (0.0.0.0)
         while True:
@@ -144,9 +144,9 @@ def main():
             # Here is the function call:
             client_handler = threading.Thread(target=handle_client, args=(client, address[0], address[1]))
             client_handler.start()
-    except OSError as os:
+    except OSError:
         print("[*] OSError: Address already in use.")
-    except KeyboardInterrupt as ki:
+    except KeyboardInterrupt:
         print("\n[*] Exiting...")
 
 
@@ -327,13 +327,13 @@ def handle_client(client_socket, address, current_port):
         except ValueError as ve:
             print("[*] ValueError: ", format(ve.args[0]))
             print(f"[*] Disconnected from {address}:{current_port}")
-        except KeyboardInterrupt as ki:
+        except KeyboardInterrupt:
             print("\n[*] Exiting...")
-        except ConnectionResetError as cre:
+        except ConnectionResetError:
             print("[*] ConnectionResetError.")
-        except BrokenPipeError as bp:
+        except BrokenPipeError:
             print(f"[*] Disconnected from {address}:{current_port}")
-        except IndexError as ie:
+        except IndexError:
             print(f"[*] IndexError")
             print(f"[*] Disconnected from {address}:{current_port}")
 
@@ -362,5 +362,3 @@ def handle_client(client_socket, address, current_port):
 # START
 if __name__ == '__main__':
     main()
-
-
