@@ -404,7 +404,7 @@ def main():
 
                             moveWasJustSent = True
 
-            printGameBoard(gameData[4:])
+            printGameBoard(gameData[4:], computer_is_playing, opponent_is_connected)
             displayWhoWon(gameData, myTurn)
             print("Game over!")
 
