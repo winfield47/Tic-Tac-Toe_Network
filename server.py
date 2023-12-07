@@ -7,6 +7,7 @@
 
 import socket
 import json
+import os
 import threading
 import random
 import time
@@ -19,7 +20,7 @@ gameData = [0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 players = [1, 0, 0]  # [current player], [player 1's current_port], [player 2's current_port]
 
 # CONSTANTS
-COMPUTER_FILL_IN_TIMER = 15
+COMPUTER_FILL_IN_TIMER = 30
 DEFAULT_PORT = 10101
 
 
@@ -35,6 +36,8 @@ def get_server_port():
 
             # Validate the entered port number
             if 1024 < port < 65535:
+                # clear the screen
+                os.system('cls' if os.name == 'nt' else 'clear')
                 return port
             else:
                 print("Invalid port number. Please enter a value above 1024.")

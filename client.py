@@ -32,19 +32,31 @@ def get_target_address():
         return target_address
 
     except ValueError:
+        # clear the screen
+        os.system('cls' if os.name == 'nt' else 'clear')
         # Handle the case where the entered address is not a valid IPv4 address
-        print("Invalid IPv4 address.\nUsing the default address.")
-        time.sleep(3)
+        print("Invalid IPv4 address.")
+        time.sleep(1)
+        print("Using the default address.")
+        time.sleep(1)
         return default_address
 
     except socket.error as e:
-        print(f"Socket error: {e}.\nUsing the default address.")
-        time.sleep(3)
+        # clear the screen
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(f"Socket error: {e}.")
+        time.sleep(1)
+        print(f"Using the default address.")
+        time.sleep(1)
         return default_address
 
     except Exception as e:
-        print(f"An unexpected error occurred: {e}.\nUsing the default address.")
-        time.sleep(3)
+        # clear the screen
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(f"An unexpected error occurred: {e}.")
+        time.sleep(1)
+        print("Using the default address.")
+        time.sleep(1)
         return default_address
 
     except KeyboardInterrupt:
@@ -72,14 +84,20 @@ def get_target_port():
             else:
                 # clear the screen
                 os.system('cls' if os.name == 'nt' else 'clear')
-                print("Invalid port number. Please enter a positive value below 65535.")
+                print("Invalid port number.")
                 time.sleep(1)
+                print("Using the default port.")
+                time.sleep(1)
+                return default_port
 
         except ValueError:
             # clear the screen
             os.system('cls' if os.name == 'nt' else 'clear')
-            print("Invalid input. Please enter a valid integer.")
+            print("Invalid input.")
             time.sleep(1)
+            print("Using the default port.")
+            time.sleep(1)
+            return default_port
 
         except KeyboardInterrupt:
             print("\nKeyboardInterrupt")
@@ -125,6 +143,36 @@ def convertSpotValue(spot):
         return "E"
 
 
+def getTurn(player_piece):
+    print(f"You are playing as '{convertSpotValue(player_piece)}'")
+    return input("Choice: ")
+
+
+def printYourTurn():
+    print("^ YOUR TURN ^")
+
+
+def doesPlayerNeedTutorial():
+    return False if input("Have you played here before? (y/N): ").lower() == 'y' else True
+
+
+def printTutorial(player_piece):
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("\t\t\t[*] TUTORIAL [*]")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print(f"[*] The server has assigned you the '{convertSpotValue(player_piece)}' piece!")
+    print("[*] To place this piece, type in the spot you'd like to place it in!")
+    print("[*] Spots go from left to right, then top to bottom:")
+    print("   -  Ex: 1 -> top left spot")
+    print("   -  Ex: 5 -> middle spot")
+    print("   -  Ex: 9 -> bottom right spot")
+    print("[*] Before (or after) entering your move, please connect another")
+    print("    client as your opponent, using the default connections.")
+    print("[*] If you don't connect another client, then after a short time")
+    print("    a computer will be matched against you (decent AI).")
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+
+
 def printGameBoard(spots, opp_connected, comp_connected, place=0):
     # clear the screen
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -133,11 +181,11 @@ def printGameBoard(spots, opp_connected, comp_connected, place=0):
     if 13 not in spots:  # 13 in spots means that all the gameData was given: this is bad
         # then print the board
         if opp_connected:
-            print("Current Game: You VS Player")
+            print("TicTacToe: You VS Player")
         elif comp_connected:
-            print("Current Game: You VS Computer")
+            print("TicTacToe: You VS Computer")
         else:
-            print("Current Game: ")
+            print("TicTacToe: Looking for opponent...")
         print("+---+---+---+")
         count = 0
         for spot in spots:
@@ -153,10 +201,23 @@ def printGameBoard(spots, opp_connected, comp_connected, place=0):
 
 def main():
 
-    # IPv4 I want to connect to:
-    target_address = get_target_address()
-    # Port I want to connect to:
-    target_port = get_target_port()
+    # clear the screen
+    os.system('cls' if os.name == 'nt' else 'clear')
+
+    # is the player new to my program?
+    needs_tutorial = doesPlayerNeedTutorial()
+
+    # don't scare away the noobs!
+    if needs_tutorial:
+        target_address = "127.0.0.1"
+        target_port = 10101
+
+    # let the veterans do what they want
+    else:
+        # IPv4 I want to connect to:
+        target_address = get_target_address()
+        # Port I want to connect to:
+        target_port = get_target_port()
 
     # TicTacToe
     continueKey = 'y'
@@ -168,6 +229,8 @@ def main():
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             # connect the client
             client_socket.connect((target_address, target_port))
+            # clear the screen
+            os.system('cls' if os.name == 'nt' else 'clear')
             print(f"[*] Connected to {target_address}:{target_port}")
 
             # base data for gameData
@@ -175,7 +238,6 @@ def main():
             myTurn = 0
             moveWasJustSent = False
             numerical_space = 1
-            needs_tutorial = False
             computer_is_playing = False
             opponent_is_connected = False
 
@@ -190,7 +252,9 @@ def main():
                 # initialize the data i need to send
                 request = [2, 3, 0]  # 0 is a placeholder
 
-                # server updating our game
+                #
+                # # server updating our game
+                #
                 if server_response[0] == 0:
 
                     # authenticate that the data is of good quality
@@ -204,18 +268,15 @@ def main():
                             if gameData[3] == myTurn:
                                 # Take a Turn!
                                 printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing)
-                                print(f"Your turn! -> '{convertSpotValue(myTurn)}'")
+                                printYourTurn()
                                 if moveWasJustSent:
                                     print("That spot is taken!")
                                 if needs_tutorial:
-                                    print("Spots go from left to right, then top to bottom:")
-                                    print("\tEx: 1 -> top left")
-                                    print("\tEx: 5 -> middle")
-                                    print("\tEx: 9 -> bottom right")
+                                    printTutorial(myTurn)
                                     needs_tutorial = False
 
                                 # take your turn
-                                request[2] = input("Choice: ")
+                                request[2] = getTurn(myTurn)
 
                                 # convert data to a format that can be sent through a socket
                                 request = json.dumps(request)
@@ -262,7 +323,9 @@ def main():
                                 # leave the loop
                                 break
 
-                # inform the client on which piece they will be using
+                #
+                # # inform the client on which piece they will be using
+                #
                 elif server_response[0] == 3:
                     myTurn = server_response[2]
                     # too many players
@@ -281,18 +344,14 @@ def main():
 
                     # player is O
                     elif server_response[2] == 1:
-                        print("Your piece will be O.")
+                        print("Loading the game...")
                         time.sleep(1)
-                        needs_tutorial = True
 
                     # player is X
                     elif server_response[2] == 2:
-                        print("Your piece will be X.")
-                        time.sleep(1)
                         printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing, 1)
                         print(f"You are playing as '{convertSpotValue(myTurn)}'")
                         print("Waiting for opponent...")
-                        needs_tutorial = True
 
                     # if the server sends bad data
                     else:
@@ -308,7 +367,9 @@ def main():
 
                         return
 
-                # matchmaking updates
+                #
+                # # matchmaking updates
+                #
                 elif server_response[0] == 4:
 
                     # validate quality of data
@@ -332,8 +393,7 @@ def main():
                             if opponent_is_connected:
                                 print("Opponent disconnected!")
                             else:
-                                print("Looking for opponent...")
-                                print("After some time, if an opponent is not found, a computer will fill in.")
+                                print("If an opponent is not found soon, a computer will fill in.")
                             computer_is_playing = False
                             opponent_is_connected = False
                             moveWasJustSent = False
@@ -378,7 +438,9 @@ def main():
                             opponent_is_connected = False
                             moveWasJustSent = False
 
-                # inform the client of their bad input
+                #
+                # # inform the client of their bad input
+                #
                 elif server_response[0] == 5:
 
                     # validate quality of data
@@ -389,12 +451,12 @@ def main():
 
                             # Take a Turn!
                             printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing)
-                            print(f"Your turn! -> '{convertSpotValue(myTurn)}'")
+                            printYourTurn()
 
                             print("Invalid input. Please enter a number.")
 
                             # take your turn
-                            request[2] = input("Choice: ")
+                            request[2] = getTurn(myTurn)
 
                             # convert data to a format that can be sent through a socket
                             request = json.dumps(request)
@@ -408,12 +470,12 @@ def main():
 
                             # Take a Turn!
                             printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing)
-                            print(f"Your turn! -> '{convertSpotValue(myTurn)}'")
+                            printYourTurn()
                             if moveWasJustSent:
                                 print("Invalid choice. Please choose a number between 1 and 9.")
 
                             # take your turn
-                            request[2] = input("Choice: ")
+                            request[2] = getTurn(myTurn)
 
                             # convert data to a format that can be sent through a socket
                             request = json.dumps(request)
@@ -427,12 +489,12 @@ def main():
 
                             # Take a Turn!
                             printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing)
-                            print(f"Your turn! -> '{convertSpotValue(myTurn)}'")
+                            printYourTurn()
                             if moveWasJustSent:
                                 print("That spot is taken!")
 
                             # take your turn
-                            request[2] = input("Choice: ")
+                            request[2] = getTurn(myTurn)
 
                             # convert data to a format that can be sent through a socket
                             request = json.dumps(request)
@@ -459,7 +521,6 @@ def main():
 
     except ConnectionRefusedError as cre:
         print("ConnectionRefusedError: ", format(cre.args[0]))
-        print("It's possible the IPv4 Address you entered is incorrect.\nTry using: 127.0.0.1")
 
     except ValueError as ve:
         print("ValueError: ", format(ve.args[0]))
@@ -470,6 +531,12 @@ def main():
     # clear the screen
     time.sleep(1)
     os.system('cls' if os.name == 'nt' else 'clear')
+
+    # if they don't know what they did wrong
+    if needs_tutorial:
+        print("[*] The TicTacToe server is most likely not running.")
+        print("[*] In another terminal window, try running: python server.py")
+        print("[*] Then, use the default server port..")
 
 
 if __name__ == "__main__":
