@@ -1,5 +1,6 @@
 # TicTacToe Server
 # Kyle Winfield Burnham
+# 2023
 
 # Black Hat Python by Justin Seitz and Tim Arnold
 # https://learning.oreilly.com/library/view/black-hat-python/9781098128906/c02.xhtml#h1-501126c02-0004
@@ -15,7 +16,12 @@ server_IPv4 = '0.0.0.0'
 # What current_port I am listening on:
 server_port = 10101
 
+# global game data for both clients
+gameData = [0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+players = [1, 0, 0]  # [current player], [player 1's current_port], [player 2's current_port]
 
+
+# this checks to see if the game is over AND edits the value of the global variable 'gameData'
 def isGameOver(data):
     gameBoard = data[4:]
     win_conditions = [
@@ -118,11 +124,6 @@ def displayDiagnostics(data, port):
         print("[*] displayDiagnostics ERROR")
     print(f"[*] Send count: {data[2]}")
     printGameBoard(data[4:])
-
-
-# global game data for both clients
-gameData = [0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-players = [1, 0, 0]  # [current player], [player 1's current_port], [player 2's current_port]
 
 
 # Listen for connections
