@@ -125,7 +125,7 @@ def displayDiagnostics(data, port):
         print(f"[*] Game start!")
     else:
         print("[*] displayDiagnostics ERROR")
-    print(f"[*] Send count: {data[2]}")
+    print(f" -  Send count: {data[2]}")
     printGameBoard(data[4:])
 
 
@@ -361,7 +361,7 @@ def handle_client(client_socket, address, current_port):
 
         except ValueError as ve:
             print("[*] ValueError: ", format(ve.args[0]))
-            print(f"[*] Disconnected from {address}:{current_port}")
+            print(f" -  Disconnected from {address}:{current_port}")
         except KeyboardInterrupt:
             print("\n[*] Exiting...")
         except ConnectionResetError:
@@ -370,7 +370,7 @@ def handle_client(client_socket, address, current_port):
             print(f"[*] Disconnected from {address}:{current_port}")
         except IndexError:
             print(f"[*] IndexError")
-            print(f"[*] Disconnected from {address}:{current_port}")
+            print(f" -  Disconnected from {address}:{current_port}")
 
         if gameData[3] <= 2:
             if players[1] == current_port:
@@ -384,12 +384,12 @@ def handle_client(client_socket, address, current_port):
         if players[1] == 0 and players[2] == 0:
             # reset the game information but keep send-count
             print(f"[*] Game data before reset: {gameData}")
-            print(f"[*] Players: {players}")
+            print(f" -  Players: {players}")
             gameData[4:] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
             # reset send count to avoid reaching unreasonably high numbers
             if gameData[2] > 999:
                 gameData[2] = 1
-            print(f"[*] Game data after reset:  {gameData}")
+            print(f" -  Game data after reset:  {gameData}")
             gameData[3] = 1
             players[0] = 1
 

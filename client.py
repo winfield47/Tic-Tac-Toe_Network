@@ -310,7 +310,6 @@ def main():
                                 print("Opponent disconnected!")
                             else:
                                 print("Looking for opponent...")
-                            if not moveWasJustSent:
                                 print("After some time, if an opponent is not found, a computer will fill in.")
                             computer_is_playing = False
                             opponent_is_connected = False
