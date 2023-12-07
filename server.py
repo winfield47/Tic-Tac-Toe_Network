@@ -20,6 +20,9 @@ server_port = 10101
 gameData = [0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 players = [1, 0, 0]  # [current player], [player 1's current_port], [player 2's current_port]
 
+# CONSTANTS
+COMPUTER_FILL_IN_TIMER = 15
+
 
 # this checks to see if the game is over AND edits the value of the global variable 'gameData'
 def isGameOver(data):
@@ -159,7 +162,7 @@ def handle_client(client_socket, address, current_port):
 
             # use this to manage when to update the GUI on the server's side
             game_has_changed = True
-            time_until_computer_moves = 10
+            time_until_computer_moves = COMPUTER_FILL_IN_TIMER
 
             # store the current_port of each player
             if players[1] == 0:
@@ -222,16 +225,16 @@ def handle_client(client_socket, address, current_port):
                 if gameData[3] == 0:
                     gameData[3] = 1
 
-                # convert data to a format that can be sent through a socket
-                gameDataFormatted = json.dumps(gameData)
-                # send the data
-                sock.send(gameDataFormatted.encode())
-                gameData[2] += 1
-
-                # if the correct player has the current port
+                # if it's their turn
                 if players[players[0]] == current_port:
 
-                    # get the game data from client
+                    # convert data to a format that can be sent through a socket
+                    gameDataFormatted = json.dumps(gameData)
+                    # send the data
+                    sock.send(gameDataFormatted.encode())
+                    gameData[2] += 1
+
+                    # listen to the client
                     received_data = sock.recv(1024)
                     gameData[2] += 1
                     client_request = json.loads(received_data.decode())
@@ -300,30 +303,61 @@ def handle_client(client_socket, address, current_port):
                         print(f"f[*] Received a bad type protocol from {address}:{current_port}")
                         game_has_changed = False
 
+                # if it's not their turn
                 else:
-                    game_has_changed = False
-                    if 0 in players:
-                        if time_until_computer_moves == 10:
-                            print("[*] Looking for opponent...")
-                        print(f"[*] Time until computer makes a move: {time_until_computer_moves}")
-                        time_until_computer_moves -= 1
 
-                        # Take computer's turn
-                        if time_until_computer_moves <= 0:
-                            computerTurn(gameData)
+                    # update the client's game once after they move so that they see their own move
+                    if game_has_changed:
+                        # tell the client that the computer is filling in
+                        gameDataFormatted = json.dumps(gameData)
+                        # send the data
+                        sock.send(gameDataFormatted.encode())
+                        gameData[2] += 1
 
-                            # game over? (this check can also change the value of the game state)
-                            if isGameOver(gameData):
-                                displayDiagnostics(gameData, current_port)
-
-                                # convert data to a format that can be sent through a socket
-                                gameDataFormatted = json.dumps(gameData)
-
-                                # send the data
-                                sock.send(gameDataFormatted.encode())
-                                gameData[2] += 1
+                    # after updating client's game data, count down to filling in as computer
                     else:
-                        time_until_computer_moves = 10
+
+                        # if there's only one player currently
+                        if 0 in players:
+
+                            # a computer will play instead of a player if a player doesn't connect for 10 seconds
+                            if time_until_computer_moves == COMPUTER_FILL_IN_TIMER:
+                                print("[*] Looking for opponent...")
+                            if time_until_computer_moves != COMPUTER_FILL_IN_TIMER and time_until_computer_moves % 5 == 0:
+                                print(f"[*] Time until computer makes a move: {time_until_computer_moves}")
+                            time_until_computer_moves -= 1
+
+                            # if it has been 10 seconds with no opponent
+                            if time_until_computer_moves <= 0:
+
+                                # Take computer's turn
+                                computerTurn(gameData)
+
+                                # tell the client that the computer is filling in
+                                matchmaking_diagnostics = json.dumps([4, 3, 2])
+                                # send the data
+                                sock.send(matchmaking_diagnostics.encode())
+                                gameData[2] += 1
+
+                                # game over? (this check can also change the value of the game state)
+                                if isGameOver(gameData):
+                                    displayDiagnostics(gameData, current_port)
+                            else:
+                                # tell the client that the opponent is disconnected
+                                matchmaking_diagnostics = json.dumps([4, 3, 0])
+                                # send the data
+                                sock.send(matchmaking_diagnostics.encode())
+                                gameData[2] += 1
+                        else:
+                            time_until_computer_moves = COMPUTER_FILL_IN_TIMER
+                            # tell the client that the opponent is disconnected
+                            matchmaking_diagnostics = json.dumps([4, 3, 1])
+                            # send the data
+                            sock.send(matchmaking_diagnostics.encode())
+                            gameData[2] += 1
+
+                    # after one loop, don't keep updating if the game hasn't updated
+                    game_has_changed = False
 
         except ValueError as ve:
             print("[*] ValueError: ", format(ve.args[0]))

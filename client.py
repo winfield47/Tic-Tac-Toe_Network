@@ -60,15 +60,21 @@ def clear_input_buffer():
         termios.tcflush(sys.stdin, termios.TCIOFLUSH)
 
 
-def displayWhoWon(gameData):
-    if gameData[3] == 3:
+def displayWhoWon(data, client_piece):
+    if data[3] == 3:
         print("Cat's game...")
-    elif gameData[3] == 4:
-        print("O wins!")
-    elif gameData[3] == 5:
-        print("X wins!")
+    elif data[3] == 4:
+        if convertSpotValue(client_piece) == 'O':
+            print("You won!")
+        else:
+            print("You lost!")
+    elif data[3] == 5:
+        if convertSpotValue(client_piece) == 'X':
+            print("You won!")
+        else:
+            print("You lost!")
     else:
-        print(f"displayWhoWon ERROR:\nGame Data:{gameData}")
+        print(f"displayWhoWon ERROR:\nGame Data:{data}")
 
 
 def convertSpotValue(spot):
@@ -140,6 +146,8 @@ def main():
             moveWasJustSent = False
             numerical_space = 1
             needs_tutorial = False
+            computer_is_playing = False
+            opponent_is_connected = False
 
             while True:
 
@@ -152,7 +160,7 @@ def main():
                 # initialize the data i need to send
                 request = [2, 3, 0]  # 0 is a placeholder
 
-                # server updating our game type
+                # server updating our game
                 if server_response[0] == 0:
 
                     # authenticate that the data is of good quality
@@ -162,17 +170,20 @@ def main():
                         if server_response[2] > gameData[2]:
                             gameData = server_response
 
-                            # show the board
+                            # if it's my turn currently
                             if gameData[3] == myTurn:
                                 # Take a Turn!
                                 printGameBoard(gameData[4:])
 
                                 # this should only be True here if the input wasn't accepted by the server
                                 # and THAT is only when the spot has been taken already
+                                print(f"Your turn! -> '{convertSpotValue(myTurn)}'")
+                                if opponent_is_connected:
+                                    print("VS. Player")
+                                elif computer_is_playing:
+                                    print("VS. Computer")
                                 if moveWasJustSent:
                                     print("That spot is taken!")
-                                else:
-                                    print(f"Your turn! -> '{convertSpotValue(myTurn)}'")
                                 if needs_tutorial:
                                     print("Spots go from left to right, then top to bottom:")
                                     print("\tEx: 1 -> top left")
@@ -190,8 +201,14 @@ def main():
 
                                 moveWasJustSent = True
 
+                            # if it's the opponent's turn currently
                             elif gameData[3] == 3 - myTurn:
 
+                                # just print the board, nothing fancy
+                                printGameBoard(gameData[4:])
+                                print(f"You are playing as '{convertSpotValue(myTurn)}'")
+
+                                '''
                                 # display the number for each space one by one
                                 if numerical_space > 9:
                                     numerical_space = 1
@@ -202,13 +219,20 @@ def main():
                                         numerical_space = 1
 
                                 # display the current board
-                                printGameBoard(gameData[4:], numerical_space)
-                                print(f"You are playing as '{convertSpotValue(myTurn)}'")
-                                print("Waiting for opponent...")
-                                if not moveWasJustSent:
-                                    print("(Computer plays for absent opponents.)")
-                                moveWasJustSent = False
-                                numerical_space += 1
+                                if computer_is_playing:
+                                    printGameBoard(gameData[4:])
+                                    print(f"You are playing as '{convertSpotValue(myTurn)}'")
+                                    print("Computer is thinking...")
+                                    moveWasJustSent = False
+                                else:
+                                    printGameBoard(gameData[4:], numerical_space)
+                                    print(f"You are playing as '{convertSpotValue(myTurn)}'")
+                                    print("Waiting for opponent...")
+                                    if not moveWasJustSent:
+                                        print("(Computer plays for absent opponents.)")
+                                    moveWasJustSent = False
+                                    numerical_space += 1
+                                '''
 
                             # if the game is over
                             if gameData[3] >= 3:
@@ -261,8 +285,79 @@ def main():
 
                         return
 
+                # matchmaking updates
+                elif server_response[0] == 4:
+
+                    # validate quality of data
+                    if server_response[1] == 3:
+
+                        # if opponent is disconnected
+                        if server_response[2] == 0:
+
+                            # display the number for each space one by one
+                            if numerical_space > 9:
+                                numerical_space = 1
+
+                            while gameData[3 + numerical_space] != 0:
+                                numerical_space += 1
+                                if numerical_space > 9:
+                                    numerical_space = 1
+
+                            # display the current board
+                            printGameBoard(gameData[4:], numerical_space)
+                            print(f"You are playing as '{convertSpotValue(myTurn)}'")
+                            if opponent_is_connected:
+                                print("Opponent disconnected!")
+                            else:
+                                print("Looking for opponent...")
+                            if not moveWasJustSent:
+                                print("After some time, if an opponent is not found, a computer will fill in.")
+                            computer_is_playing = False
+                            opponent_is_connected = False
+                            moveWasJustSent = False
+                            numerical_space += 1
+
+                        # if opponent is connected
+                        if server_response[2] == 1:
+
+                            # display the number for each space one by one
+                            if numerical_space > 9:
+                                numerical_space = 1
+
+                            while gameData[3 + numerical_space] != 0:
+                                numerical_space += 1
+                                if numerical_space > 9:
+                                    numerical_space = 1
+
+                            # display the current board
+                            printGameBoard(gameData[4:], numerical_space)
+                            print(f"You are playing as '{convertSpotValue(myTurn)}'")
+
+                            if opponent_is_connected:
+                                print("Waiting on opponent's move...")
+                            else:
+                                print("Found a player!")
+                            computer_is_playing = False
+                            opponent_is_connected = True
+                            moveWasJustSent = False
+                            numerical_space += 1
+
+                        # if computer is filling in for opponent
+                        if server_response[2] == 2:
+
+                            # display the current board
+                            printGameBoard(gameData[4:])
+                            print(f"You are playing as '{convertSpotValue(myTurn)}'")
+                            if not computer_is_playing:
+                                print("Computer is filling in...")
+                            else:
+                                print("Computer is thinking...")
+                            computer_is_playing = True
+                            opponent_is_connected = False
+                            moveWasJustSent = False
+
             printGameBoard(gameData[4:])
-            displayWhoWon(gameData)
+            displayWhoWon(gameData, myTurn)
             print("Game over!")
 
             time.sleep(1)
