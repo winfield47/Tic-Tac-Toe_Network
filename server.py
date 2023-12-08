@@ -180,6 +180,8 @@ def main():
         print("[*] OSError: Address already in use.")
     except KeyboardInterrupt:
         print("\n[*] Exiting...")
+    except EOFError:
+        print("\n[*] Exiting...")
 
 
 # Send data back to the connecting client:
@@ -232,7 +234,7 @@ def handle_client(client_socket, address, current_port):
                 # # # \/ IMPORTANT : DO NOT DELETE \/ # # #
                 # #                                     # #
                 #                                         #
-                time.sleep(1)  # <-- MAINTAINS FLOW-CONTROL
+                time.sleep(0.7)  # <-- MAINTAINS FLOW-CONTROL
                 #                                         #
                 # #                                     # #
                 # # # /\ IMPORTANT : DO NOT DELETE /\ # # #
@@ -438,6 +440,8 @@ def handle_client(client_socket, address, current_port):
             print("[*] ValueError: ", format(ve.args[0]))
             print(f" -  Disconnected from {address}:{current_port}")
         except KeyboardInterrupt:
+            print("\n[*] Exiting...")
+        except EOFError:
             print("\n[*] Exiting...")
         except ConnectionResetError:
             print("[*] ConnectionResetError.")

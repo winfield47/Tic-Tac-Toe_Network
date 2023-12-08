@@ -12,6 +12,11 @@ import time
 import os
 
 
+# CONSTANTS
+TUTORIAL_FILE_PATH = "tutorial_seen.txt"
+TUTORIAL_CHAR = 'n'
+
+
 def get_target_address():
     # clear the screen
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -61,6 +66,10 @@ def get_target_address():
 
     except KeyboardInterrupt:
         print("\nKeyboardInterrupt")
+        return -1
+    except EOFError:
+        print("\nEOF")
+        return -1
 
 
 # get a server port to be able to host multiple games
@@ -101,7 +110,10 @@ def get_target_port():
 
         except KeyboardInterrupt:
             print("\nKeyboardInterrupt")
-            break
+            return -1
+        except EOFError:
+            print("\nEOF")
+            return -1
 
 
 def clear_input_buffer():
@@ -143,6 +155,13 @@ def convertSpotValue(spot):
         return "E"
 
 
+def getContinueKey():
+    try:
+        return input("Continue playing? (Y/n)?: ")
+    except KeyboardInterrupt:
+        return 'n'
+
+
 def getTurn(player_piece):
     print(f"You are playing as '{convertSpotValue(player_piece)}'")
     return input("Choice: ")
@@ -153,12 +172,27 @@ def printYourTurn():
 
 
 def doesPlayerNeedTutorial():
-    return False if input("Have you played here before? (y/N): ").lower() == 'y' else True
+    content = ""
+    try:
+        # check to see if the file exists
+        try:
+            with open(TUTORIAL_FILE_PATH, 'r') as file:
+                content = file.read().strip().lower()
+        except FileNotFoundError:
+            pass
+        if content == TUTORIAL_CHAR:
+            return True if input("Is this your first time using this program? (y/N): ").lower() == 'y' else False
+        else:
+            return False if input("Is this your first time using this program? (Y/n): ").lower() == 'n' else True
+    except KeyboardInterrupt:
+        return -1
+    except EOFError:
+        return -1
 
 
 def printTutorial(player_piece):
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    print("\t\t\t[*] TUTORIAL [*]")
+    print("\t\t[*] MULTIPLAYER TICTACTOE TUTORIAL [*]")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print(f"[*] The server has assigned you the '{convertSpotValue(player_piece)}' piece!")
     print("[*] To place this piece, type in the spot you'd like to place it in!")
@@ -171,14 +205,34 @@ def printTutorial(player_piece):
     print("[*] If you don't connect another client, then after a short time")
     print("    a computer will be matched against you (decent AI).")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    # Write the user's choice to the file
+    with open(TUTORIAL_FILE_PATH, 'w') as file:
+        file.write(TUTORIAL_CHAR)
 
 
-def printGameBoard(spots, opp_connected, comp_connected, place=0):
+def update_numerical_space(num_space, spots):
+
+    # display the number for each space one by one
+    if num_space > 9:
+        num_space = 0
+
+    # skip all spots with pieces in them
+    if num_space != 0:
+        while spots[num_space - 1] != 0:  # this checks every spot on the board
+            num_space += 1
+            if num_space > 9:
+                num_space = 0
+                break
+
+    return num_space
+
+
+def printGameBoard(spots, opp_connected, comp_connected, num_space=0):
     # clear the screen
     os.system('cls' if os.name == 'nt' else 'clear')
     # authenticate the quality of the data in spots
     # ignore bad data
-    if 13 not in spots:  # 13 in spots means that all the gameData was given: this is bad
+    if 13 not in spots:  # 13 in spots means that all the gameData was given, which is bad
         # then print the board
         if opp_connected:
             print("TicTacToe: You VS Player")
@@ -188,11 +242,24 @@ def printGameBoard(spots, opp_connected, comp_connected, place=0):
             print("TicTacToe: Looking for opponent...")
         print("+---+---+---+")
         count = 0
+        # find out if multiple spaces are open
+        empty_spaces = 0
+        for spot in spots:
+            if spot == 0:
+                empty_spaces += 1
         for spot in spots:
             count += 1
-            # display the numbers for each space slowly
-            # print the spot
-            print("| " + (str(place) if (count == place and spot == 0) else convertSpotValue(spot)), end=" ")
+            if count == num_space and spot == 0:
+                # make sure there are multiple spaces open
+                if empty_spaces == 1:
+                    # display the numbers for each space slowly
+                    print("| " + convertSpotValue(spot), end=" ")
+                else:
+                    # display the numbers for each space slowly
+                    print("| " + str(num_space), end=" ")
+            else:
+                # print the spot
+                print("| " + convertSpotValue(spot), end=" ")
             if count % 3 == 0:
                 print(f"| <- {count - 2}, {count - 1}, {count}\n+---+---+---+")
 
@@ -207,6 +274,15 @@ def main():
     # is the player new to my program?
     needs_tutorial = doesPlayerNeedTutorial()
 
+    # make sure the server is running
+    server_is_running = False
+
+    # if the user keyboard-interrupts
+    if needs_tutorial == -1:
+        # clear the screen
+        os.system('cls' if os.name == 'nt' else 'clear')
+        return
+
     # don't scare away the noobs!
     if needs_tutorial:
         target_address = "127.0.0.1"
@@ -216,13 +292,27 @@ def main():
     else:
         # IPv4 I want to connect to:
         target_address = get_target_address()
+
+        # if the user keyboard-interrupts
+        if target_address == -1:
+            # clear the screen
+            os.system('cls' if os.name == 'nt' else 'clear')
+            return
+
         # Port I want to connect to:
         target_port = get_target_port()
+
+        # if the user keyboard-interrupts
+        if target_port == -1:
+            # clear the screen
+            os.system('cls' if os.name == 'nt' else 'clear')
+            return
 
     # TicTacToe
     continueKey = 'y'
     try:
 
+        # loop once per game
         while continueKey.lower() == 'y' or continueKey == '':
 
             # create a socket object
@@ -232,6 +322,7 @@ def main():
             # clear the screen
             os.system('cls' if os.name == 'nt' else 'clear')
             print(f"[*] Connected to {target_address}:{target_port}")
+            server_is_running = True
 
             # base data for gameData
             gameData = [0, 13, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
@@ -241,9 +332,9 @@ def main():
             computer_is_playing = False
             opponent_is_connected = False
 
+            # loop every time we get a server message
             while True:
 
-                # print("waiting for response...")
                 # receive some data
                 server_response = client_socket.recv(4096)
                 # print what was sent to us from the server we connected to
@@ -349,7 +440,7 @@ def main():
 
                     # player is X
                     elif server_response[2] == 2:
-                        printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing, 1)
+                        printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing)
                         print(f"You are playing as '{convertSpotValue(myTurn)}'")
                         print("Waiting for opponent...")
 
@@ -378,14 +469,9 @@ def main():
                         # if opponent is disconnected
                         if server_response[2] == 0:
 
-                            # display the number for each space one by one
-                            if numerical_space > 9:
-                                numerical_space = 1
-
-                            while gameData[3 + numerical_space] != 0:
-                                numerical_space += 1
-                                if numerical_space > 9:
-                                    numerical_space = 1
+                            # make a number show in all the spots one at a time
+                            numerical_space = 0 if moveWasJustSent else numerical_space
+                            numerical_space = update_numerical_space(numerical_space, gameData[4:])
 
                             # display the current board
                             printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing, numerical_space)
@@ -402,14 +488,9 @@ def main():
                         # if opponent is connected
                         if server_response[2] == 1:
 
-                            # display the number for each space one by one
-                            if numerical_space > 9:
-                                numerical_space = 1
-
-                            while gameData[3 + numerical_space] != 0:
-                                numerical_space += 1
-                                if numerical_space > 9:
-                                    numerical_space = 1
+                            # make a number show in all the spots one at a time
+                            numerical_space = 0 if moveWasJustSent else numerical_space
+                            numerical_space = update_numerical_space(numerical_space, gameData[4:])
 
                             # display the current board
                             printGameBoard(gameData[4:], opponent_is_connected, computer_is_playing, numerical_space)
@@ -504,8 +585,8 @@ def main():
                             moveWasJustSent = True
 
             printGameBoard(gameData[4:], computer_is_playing, opponent_is_connected)
+            print("^ GAME OVER ^")
             displayWhoWon(gameData, myTurn)
-            print("Game over!")
 
             time.sleep(1)
 
@@ -514,13 +595,17 @@ def main():
             client_socket.send(msg.encode())
             # Close the client nicely
             client_socket.close()
-            continueKey = input("Continue playing? (Y/n)?: ")
+            continueKey = getContinueKey()
 
     except KeyboardInterrupt:
         print("\n[*] Exiting...")
 
+    except EOFError:
+        print("\n[*] Exiting...")
+
     except ConnectionRefusedError as cre:
-        print("ConnectionRefusedError: ", format(cre.args[0]))
+        print("No connection...")
+        pass
 
     except ValueError as ve:
         print("ValueError: ", format(ve.args[0]))
@@ -533,10 +618,11 @@ def main():
     os.system('cls' if os.name == 'nt' else 'clear')
 
     # if they don't know what they did wrong
-    if needs_tutorial:
+    if not server_is_running:
         print("[*] The TicTacToe server is most likely not running.")
+        print("[*] You also may have entered in the wrong address or port.")
         print("[*] In another terminal window, try running: python server.py")
-        print("[*] Then, use the default server port..")
+        print("[*] Then, use the default server port.")
 
 
 if __name__ == "__main__":
