@@ -1,0 +1,795 @@
+Script started on Sun Dec 10 20:15:08 2023
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m20:15:08[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004hexit  e  ppython2  3 client.py[1m [0m[0m [?2004l
+[H[2J[3JIs this your first time using this program? (Y/n): 
+[H[2J[3J[*] Connected to 127.0.0.1:10101
+Loading the game...
+[H[2J[3JTicTacToe: Looking for opponent...
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   |   |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+^ YOUR TURN ^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		[*] MULTIPLAYER TICTACTOE TUTORIAL [*]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[*] The server has assigned you the 'O' piece!
+[*] To place this piece, type in the spot you'd like to place it in!
+[*] Spots go from left to right, then top to bottom:
+   -  Ex: 1 -> top left spot
+   -  Ex: 5 -> middle spot
+   -  Ex: 9 -> bottom right spot
+[*] Before (or after) entering your move, please connect another
+    client as your opponent, using the default connections.
+[*] If you don't connect another client, then after a short time
+    a computer will be matched against you (decent AI).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+You are playing as 'O'
+Choice: 5
+[H[2J[3JTicTacToe: Looking for opponent...
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+[H[2J[3JTicTacToe: Looking for opponent...
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Found a player!
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| 1 |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   | 2 |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   | 3 | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+| 4 | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O | 6 | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+| 7 |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   | 8 |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   | 9 | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| 1 |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   | 2 |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   | 3 | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JYou are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O | 6 | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+| 7 |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   | 8 |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   | 9 | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| 1 |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   | 2 |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   | 3 | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+| 4 | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O | 6 | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+| 7 |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   | 8 |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   | 9 | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| 1 |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   | 2 |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   | 3 | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+| 4 | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O | 6 | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+| 7 |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   | 8 |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   | 9 | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| 1 |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   | 2 |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   | 3 | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+^C
+[*] Exiting...
+[H[2J[3J[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m20:17:27[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004hpython3 client.py[?2004l
+[H[2J[3JIs this your first time using this program? (y/N): y
+[H[2J[3J[*] Connected to 127.0.0.1:10101
+Loading the game...
+[H[2J[3JTicTacToe: Looking for opponent...
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   |   |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+^ YOUR TURN ^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		[*] MULTIPLAYER TICTACTOE TUTORIAL [*]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[*] The server has assigned you the 'O' piece!
+[*] To place this piece, type in the spot you'd like to place it in!
+[*] Spots go from left to right, then top to bottom:
+   -  Ex: 1 -> top left spot
+   -  Ex: 5 -> middle spot
+   -  Ex: 9 -> bottom right spot
+[*] Before (or after) entering your move, please connect another
+    client as your opponent, using the default connections.
+[*] If you don't connect another client, then after a short time
+    a computer will be matched against you (decent AI).
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+You are playing as 'O'
+Choice: 5
+[H[2J[3JTicTacToe: Looking for opponent...
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+[H[2J[3JTicTacToe: Looking for opponent...
++---+---+---+
+|   |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Found a player!
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| 1 |   |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   | 2 |   | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+|   |   | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+^ YOUR TURN ^
+You are playing as 'O'
+Choice: ^C
+[*] Exiting...
+[H[2J[3J[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m20:18:06[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004hpython3 client.py[?2004l
+[H[2J[3JIs this your first time using this program? (y/N): 
+[H[2J[3JPlease enter a TicTacToe IPv4 address to connect to.
+(Default: 127.0.0.1): 
+[H[2J[3JPlease enter the port number to connect to.
+(Default: 10101): 
+[H[2J[3J[*] Connected to 127.0.0.1:10101
+Loading the game...
+[H[2J[3JTicTacToe: Looking for opponent...
++---+---+---+
+|   |   | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+^ YOUR TURN ^
+You are playing as 'O'
+Choice: 1
+[H[2J[3JTicTacToe: Looking for opponent...
++---+---+---+
+| O |   | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+[H[2J[3JTicTacToe: Looking for opponent...
++---+---+---+
+| O |   | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Found a player!
+2[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O | 2 | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O |   | X | <- 1, 2, 3
++---+---+---+
+| 4 | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+aslfjk;[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O |   | X | <- 1, 2, 3
++---+---+---+
+|   | O | 6 | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+l;askj[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O |   | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+| 7 |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+df[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O |   | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   | 8 |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O |   | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   | 9 | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O | X | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+^ YOUR TURN ^
+You are playing as 'O'
+Choice: l;ksajdf
+w[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O | X | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+^ YOUR TURN ^
+Invalid input. Please enter a number.
+You are playing as 'O'
+Choice: 2 2 23 r23 f2
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O | X | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+^ YOUR TURN ^
+Invalid input. Please enter a number.
+You are playing as 'O'
+Choice: lk;jsdaf ;l2k3j f2
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O | X | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+^ YOUR TURN ^
+Invalid input. Please enter a number.
+You are playing as 'O'
+Choice: 3
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O | X | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+^ YOUR TURN ^
+That spot is taken!
+You are playing as 'O'
+Choice: 23
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O | X | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+^ YOUR TURN ^
+Invalid choice. Please choose a number between 1 and 9.
+You are playing as 'O'
+Choice: 23
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O | X | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+^ YOUR TURN ^
+Invalid choice. Please choose a number between 1 and 9.
+You are playing as 'O'
+Choice: 2
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O | X | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+^ YOUR TURN ^
+That spot is taken!
+You are playing as 'O'
+Choice: ^D
+[*] Exiting...
+[H[2J[3J[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m20:18:35[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004hpython3 client.py[?2004l
+[H[2J[3JIs this your first time using this program? (y/N): 
+[H[2J[3JPlease enter a TicTacToe IPv4 address to connect to.
+(Default: 127.0.0.1): 
+[H[2J[3JPlease enter the port number to connect to.
+(Default: 10101): 
+[H[2J[3J[*] Connected to 127.0.0.1:10101
+Loading the game...
+[H[2J[3JTicTacToe: Looking for opponent...
++---+---+---+
+| O | X | X | <- 1, 2, 3
++---+---+---+
+|   | O |   | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+^ YOUR TURN ^
+You are playing as 'O'
+Choice: 6
+[H[2J[3JTicTacToe: Looking for opponent...
++---+---+---+
+| O | X | X | <- 1, 2, 3
++---+---+---+
+|   | O | O | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+[H[2J[3JTicTacToe: Looking for opponent...
++---+---+---+
+| O | X | X | <- 1, 2, 3
++---+---+---+
+|   | O | O | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Found a player!
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O | X | X | <- 1, 2, 3
++---+---+---+
+| 4 | O | O | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O | X | X | <- 1, 2, 3
++---+---+---+
+|   | O | O | <- 4, 5, 6
++---+---+---+
+| 7 |   |   | <- 7, 8, 9
++---+---+---+
+You are playing as 'O'
+Waiting on opponent's move...
+[H[2J[3JTicTacToe: You VS Player
++---+---+---+
+| O | X | X | <- 1, 2, 3
++---+---+---+
+| X | O | O | <- 4, 5, 6
++---+---+---+
+|   |   |   | <- 7, 8, 9
++---+---+---+
+^ YOUR TURN ^
+You are playing as 'O'
+Choice: 9
+[H[2J[3JTicTacToe: You VS Computer
++---+---+---+
+| O | X | X | <- 1, 2, 3
++---+---+---+
+| X | O | O | <- 4, 5, 6
++---+---+---+
+|   |   | O | <- 7, 8, 9
++---+---+---+
+^ GAME OVER ^
+You won!
+Continue playing? (Y/n)?: n
+[H[2J[3J[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m20:18:57[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004heexit[?2004l
+
+Saving session...
+...copying shared history...
+...saving history...truncating history files...
+...completed.
+
+Script done on Sun Dec 10 20:20:26 2023

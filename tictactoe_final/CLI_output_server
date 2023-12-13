@@ -1,0 +1,303 @@
+Script started on Sun Dec 10 20:14:58 2023
+Restored session: Sun Dec 10 20:14:26 PST 2023
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m20:14:58[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004hppython3 server.py[1m [0m[0m [?2004l
+Please enter the port number to listen on (above 1024):
+(Default: 10101): 
+[H[2J[3J[*] Listening on 0.0.0.0:10101
+[*] Accepted connection from 127.0.0.1:62319
+[*] Players: [1, 62319, 0]
+[*] Game start!
+ -  Send count: 1
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Accepted connection from 127.0.0.1:62320
+[*] Players: [1, 62319, 62320]
+[*] O's turn: 62320
+ -  Send count: 3
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Players: [2, 62319, 62320]
+[*] X's turn: 62319
+ -  Send count: 23
++---+---+---+
+|   |   |   |
++---+---+---+
+|   | O |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Disconnected from 127.0.0.1:62319
+[*] Players: [2, 0, 62320]
+[*] ValueError:  Expecting value: line 1 column 1 (char 0)
+ -  Disconnected from 127.0.0.1:62320
+[*] Players: [2, 0, 0]
+[*] Game data before reset: [0, 13, 67, 2, 0, 0, 0, 0, 1, 0, 0, 0, 0]
+ -  Players: [2, 0, 0]
+ -  Game data after reset:  [0, 13, 67, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+^C
+[*] Exiting...
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m20:17:31[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004hpython3 server.py[?2004l
+Please enter the port number to listen on (above 1024):
+(Default: 10101): 
+[H[2J[3J[*] Listening on 0.0.0.0:10101
+^C
+[*] Exiting...
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m20:17:36[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004hpython3 server.py[?2004l
+Please enter the port number to listen on (above 1024):
+(Default: 10101): 
+[H[2J[3J[*] Listening on 0.0.0.0:10101
+[*] Accepted connection from 127.0.0.1:62326
+[*] Players: [1, 62326, 0]
+[*] Game start!
+ -  Send count: 1
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Accepted connection from 127.0.0.1:62327
+[*] Players: [1, 62326, 62327]
+[*] O's turn: 62327
+ -  Send count: 3
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Players: [2, 62326, 62327]
+[*] X's turn: 62326
+ -  Send count: 14
++---+---+---+
+|   |   |   |
++---+---+---+
+|   | O |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Players: [1, 62326, 62327]
+[*] O's turn: 62327
+ -  Send count: 20
++---+---+---+
+|   |   | X |
++---+---+---+
+|   | O |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] ValueError:  Expecting value: line 1 column 1 (char 0)
+ -  Disconnected from 127.0.0.1:62326
+[*] Players: [1, 0, 62327]
+[*] Looking for opponent...
+[*] Accepted connection from 127.0.0.1:62328
+[*] Players: [1, 62328, 62327]
+[*] O's turn: 62328
+ -  Send count: 33
++---+---+---+
+|   |   | X |
++---+---+---+
+|   | O |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Players: [2, 62328, 62327]
+[*] X's turn: 62328
+ -  Send count: 39
++---+---+---+
+| O |   | X |
++---+---+---+
+|   | O |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Players: [1, 62328, 62327]
+[*] O's turn: 62327
+ -  Send count: 49
++---+---+---+
+| O | X | X |
++---+---+---+
+|   | O |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Client input is not an Integer.
+[*] Client input is not an Integer.
+[*] Client input is not an Integer.
+[*] Client requested an occupied space.
+[*] Client requested number out of range (1-9).
+[*] Client requested number out of range (1-9).
+[*] Client requested an occupied space.
+[*] ValueError:  Expecting value: line 1 column 1 (char 0)
+ -  Disconnected from 127.0.0.1:62328
+[*] Players: [1, 0, 62327]
+[*] Looking for opponent...
+[*] Accepted connection from 127.0.0.1:62330
+[*] Players: [1, 62330, 62327]
+[*] O's turn: 62330
+ -  Send count: 93
++---+---+---+
+| O | X | X |
++---+---+---+
+|   | O |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Players: [2, 62330, 62327]
+[*] X's turn: 62330
+ -  Send count: 100
++---+---+---+
+| O | X | X |
++---+---+---+
+|   | O | O |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Players: [1, 62330, 62327]
+[*] O's turn: 62327
+ -  Send count: 106
++---+---+---+
+| O | X | X |
++---+---+---+
+| X | O | O |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Players: [1, 62330, 62327]
+[*] O wins!
+ -  Send count: 117
++---+---+---+
+| O | X | X |
++---+---+---+
+| X | O | O |
++---+---+---+
+|   |   | O |
++---+---+---+
+[*] Players: [1, 0, 0]
+[*] Game data before reset: [0, 13, 119, 1, 1, 2, 2, 2, 1, 1, 0, 0, 1]
+ -  Players: [1, 0, 0]
+ -  Game data after reset:  [0, 13, 119, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[*] Players: [1, 0, 0]
+[*] O's turn: 62330
+ -  Send count: 119
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Looking for opponent...
+[*] Disconnected from 127.0.0.1:62330
+[*] Players: [1, 0, 0]
+[*] Game data before reset: [0, 13, 120, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+ -  Players: [1, 0, 0]
+ -  Game data after reset:  [0, 13, 120, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+[*] Accepted connection from 127.0.0.1:62332
+[*] Players: [1, 62332, 0]
+[*] O's turn: 62332
+ -  Send count: 121
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Players: [2, 62332, 0]
+[*] X's turn: 62332
+ -  Send count: 123
++---+---+---+
+|   |   |   |
++---+---+---+
+|   | O |   |
++---+---+---+
+|   |   |   |
++---+---+---+
+[*] Looking for opponent...
+[*] Time until computer makes a move: 25
+[*] Time until computer makes a move: 20
+[*] Time until computer makes a move: 15
+[*] Time until computer makes a move: 10
+[*] Time until computer makes a move: 5
+[*] Computer is taking a turn...
+[*] Players: [2, 62332, 0]
+[*] X's turn: 62332
+ -  Send count: 156
++---+---+---+
+| O |   |   |
++---+---+---+
+|   | O |   |
++---+---+---+
+|   |   | X |
++---+---+---+
+[*] Time until computer makes a move: 0
+[*] Computer is taking a turn...
+[*] Players: [2, 62332, 0]
+[*] X's turn: 62332
+ -  Send count: 160
++---+---+---+
+| O |   | X |
++---+---+---+
+|   | O | O |
++---+---+---+
+|   |   | X |
++---+---+---+
+[*] Computer is taking a turn...
+[*] Players: [2, 62332, 0]
+[*] X's turn: 62332
+ -  Send count: 164
++---+---+---+
+| O | O | X |
++---+---+---+
+| X | O | O |
++---+---+---+
+|   |   | X |
++---+---+---+
+[*] Computer is taking a turn...
+[*] Client requested an occupied space.
+[*] Players: [1, 62332, 0]
+[*] Cat's game...
+ -  Send count: 170
++---+---+---+
+| O | O | X |
++---+---+---+
+| X | O | O |
++---+---+---+
+| O | X | X |
++---+---+---+
+[*] Players: [1, 62332, 0]
+[*] Cat's game...
+ -  Send count: 171
++---+---+---+
+| O | O | X |
++---+---+---+
+| X | O | O |
++---+---+---+
+| O | X | X |
++---+---+---+
+[*] Players: [1, 0, 0]
+[*] Game data before reset: [0, 13, 172, 1, 1, 1, 2, 2, 1, 1, 1, 2, 2]
+ -  Players: [1, 0, 0]
+ -  Game data after reset:  [0, 13, 172, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+^D^C
+[*] Exiting...
+[1m[7m%[27m[1m[0m                                                                                ]7;file://Kyles-MacBook-Pro.local/Users/winfield/Code/Network%20Systems/PythonNetworks/tcp_networks/tictactoe_network[0m[27m[24m[J[1m20:20:13[0m [32mwinfield[39m [1mtictactoe_network[0m [32m$[39m [K[?2004heexit[?2004l
+
+Saving session...
+...saving history...truncating history files...
+...completed.
+
+Script done on Sun Dec 10 20:20:24 2023
